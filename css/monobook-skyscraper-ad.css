@@ -1,0 +1,45 @@
+/**
+ * Skyscraper ad styling for Monobook skin
+ */
+#content {
+	margin: 2.8em 125px 0 12.2em !important;
+}
+
+#content {
+	border-right: solid 1px rgb(170,170,170);
+}
+
+#column-google {
+	width: 120px;
+	clear: left;
+	position: absolute;
+	padding: 35px 0px 0px 3px;
+	float: right;
+	right: 0px;
+	top: 10px;
+	z-index: 1;
+}
+
+#footer {
+	width: 91%;
+}
+
+/* RTL rules */
+body.rtl #content {
+	margin: 2.8em 12.2em 0 125px !important;
+}
+
+body.rtl #content {
+	border-left: solid 1px rgb(170,170,170);
+}
+
+body.rtl #column-google {
+	width: 120px;
+	clear: right;
+	position: absolute;
+	padding: 35px 3px 0px 0px;
+	float: left;
+	left: 0px;
+	top: 10px;
+	z-index: 1;
+}

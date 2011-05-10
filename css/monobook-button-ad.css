@@ -1,0 +1,17 @@
+/**
+ * Button ad styling for Monobook skin
+ */
+#p-ads-left {
+	right: 0px;
+	top: 10px;
+	width: 150px;
+	z-index: 1;
+}
+
+/* RTL rules */
+body.rtl #p-ads-left {
+	left: 0px;
+	top: 10px;
+	width: 150px;
+	z-index: 1;
+}
