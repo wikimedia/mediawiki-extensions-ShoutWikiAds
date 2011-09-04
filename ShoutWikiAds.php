@@ -4,8 +4,8 @@
  *
  * @file
  * @ingroup Extensions
- * @version 0.1
- * @date 24 April 2011
+ * @version 0.2
+ * @date 4 September 2011
  * @author Jack Phoenix <jack@countervandalism.net>
  * @license http://en.wikipedia.org/wiki/Public_domain Public domain
  * @link http://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads Documentation
@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ShoutWiki Ads',
-	'version' => '0.1',
+	'version' => '0.2',
 	'author' => 'Jack Phoenix',
 	'description' => 'Delicious advertisements for everyone!',
 	'url' => 'http://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads',
@@ -43,6 +43,28 @@ $wgHooks['MonoBookAfterToolbox'][] = 'ShoutWikiAds::onMonoBookAfterToolbox';
 
 // Truglass
 $wgHooks['TruglassInContent'][] = 'ShoutWikiAds::renderTruglassAd';
+
+// ResourceLoader support for MediaWiki 1.17+
+$resourceTemplate = array(
+	'localBasePath' => dirname( __FILE__ ),
+	'remoteExtPath' => 'ShoutWikiAds'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.monaco'] = $resourceTemplate + array(
+	'styles' => 'css/monaco-ads.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.monobook.button'] = $resourceTemplate + array(
+	'styles' => 'css/monobook-button-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.monobook.skyscraper'] = $resourceTemplate + array(
+	'styles' => 'css/monobook-skyscraper-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.truglass'] = $resourceTemplate + array(
+	'styles' => 'css/truglass-ads.css'
+);
 
 /* Configuration
 $wgAdConfig = array(

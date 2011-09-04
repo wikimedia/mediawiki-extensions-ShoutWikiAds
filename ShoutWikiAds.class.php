@@ -281,28 +281,28 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 		{
 			$title = $out->getTitle();
 			$namespace = $title->getNamespace();
+
 			// Okay, the variable name sucks but anyway...normal page != not login page
 			$isNormalPage = $title instanceof Title &&
 				SpecialPage::resolveAlias( $title->getDBkey() ) !== 'Userlogin';
+
 			// Load ad CSS file when ads are enabled
 			if(
 				$isNormalPage &&
 				in_array( $namespace, $wgAdConfig['namespaces'] )
 			)
 			{
-				global $wgScriptPath;
-				$cssPath = $wgScriptPath . '/extensions/ShoutWikiAds/css/';
 				if ( get_class( $sk ) == 'SkinMonaco' ) { // Monaco
-					$out->addExtensionStyle( $cssPath . 'monaco-ads.css' );
+					$out->addModuleStyles( 'ext.ShoutWikiAds.monaco' );
 				} elseif( get_class( $sk ) == 'SkinMonoBook' ) { // Monobook
 					if ( $wgAdConfig['right-column'] ) {
-						$out->addExtensionStyle( $cssPath . 'monobook-skyscraper-ad.css' );
+						$out->addModuleStyles( 'ext.ShoutWikiAds.monobook.skyscraper' );
 					}
 					if ( $wgAdConfig['toolbox-button'] ) {
-						$out->addExtensionStyle( $cssPath . 'monobook-button-ad.css' );
+						$out->addModuleStyles( 'ext.ShoutWikiAds.monobook.button' );
 					}
 				} elseif ( get_class( $sk ) == 'SkinTruglass' ) { // Truglass
-					$out->addExtensionStyle( $cssPath . 'truglass-ads.css' );
+					$out->addModuleStyles( 'ext.ShoutWikiAds.truglass' );
 				}
 			}
 		}
