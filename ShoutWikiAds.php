@@ -21,7 +21,7 @@ $wgExtensionCredits['other'][] = array(
 	'version' => '0.2',
 	'author' => 'Jack Phoenix',
 	'description' => 'Delicious advertisements for everyone!',
-	'url' => 'http://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads',
+	'url' => 'https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads',
 );
 
 // Autoload the class so that we can actually use its functions
