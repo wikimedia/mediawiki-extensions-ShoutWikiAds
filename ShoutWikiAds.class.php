@@ -65,7 +65,13 @@ class ShoutWikiAds {
 			// Portuguese -> Turkish
 			'pt', 'ro', 'ru', 'sr', 'sr-ec', 'sk', 'es', 'sv', 'th', 'tr',
 			// http://adsense.blogspot.com/2009/08/adsense-launched-in-lithuanian.html
-			'lt', 'lv', 'uk'
+			'lt', 'lv', 'uk',
+			// Vietnamese http://adsense.blogspot.co.uk/2013/05/adsense-now-speaks-vietnamese.html
+			'vi',
+			// Slovenian & Estonian http://adsense.blogspot.co.uk/2012/06/adsense-now-available-for-websites-in.html
+			'sl', 'et',
+			// Indonesian http://adsense.blogspot.co.uk/2012/02/adsense-now-speaks-indonesian.html
+			'id',
 		);
 
 		if( in_array( $wgLanguageCode, $supportedAdLanguages ) ) {
