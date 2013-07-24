@@ -6,8 +6,8 @@
  *
  * We allow wiki admins to configure some things because our "sane defaults"
  * may clash with certain CSS styles (dark wikis, for example).
- * wfMsgForContent() is used because CSS is "global" (doesn't vary depending on
- * the user's language).
+ * The Message objects are called with ->inContentLanguage(), because CSS is
+ * "global" (doesn't vary depending on the user's language).
  *
  * All class methods are public and static.
  *
@@ -34,9 +34,14 @@ class ShoutWikiAds {
 
 		if( $wgTitle instanceof Title &&
 				SpecialPage::resolveAlias( $wgTitle->getDBkey() ) == 'Userlogin' ||
-			$wgUser->isAllowed( 'autoconfirmed' ) && !$wgRequest->getVal( 'forceads' )
+			in_array( 'staff', $wgUser->getEffectiveGroups() ) && !$wgRequest->getVal( 'forceads' )
 		)
 		{
+			return false;
+		}
+
+		// No configuration for this skin? Bail out!
+		if ( !$wgAdConfig[self::determineSkin()] ) {
 			return false;
 		}
 
@@ -103,7 +108,7 @@ class ShoutWikiAds {
 	 * @return String: HTML code
 	 */
 	public static function getSidebarHTML() {
-		global $wgAdConfig, $wgUser;
+		global $wgAdConfig;
 
 		$skinName = 'monaco';
 		$id = "{$skinName}-sidebar-ad";
@@ -112,13 +117,7 @@ class ShoutWikiAds {
 		// as Monobook cannot support this type of ad (Monobook has right
 		// column and toolbox ads only)
 		/*
-		$skinObj = $wgUser->getSkin();
-		$skinName = 'monobook'; // sane default
-		if ( get_class( $skinObj ) == 'SkinMonaco' ) {
-			$skinName = 'monaco';
-		} elseif ( get_class( $skinObj ) == 'SkinMonoBook' ) {
-			$skinName = 'monobook';
-		}
+		$skinName = self::determineSkin();
 
 		$id = "{$skinName}-sidebar-ad";
 		$classes = "{$skinName}-ad noprint";
@@ -132,20 +131,40 @@ class ShoutWikiAds {
 		}
 		*/
 
+		$adSlot = '';
+		if ( isset( $wgAdConfig[$skinName . '-small-square-ad-slot'] ) ) {
+			$adSlot = $wgAdConfig[$skinName . '-small-square-ad-slot'];
+		}
+
+		$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-sidebar-ad-color-border' )->inContentLanguage();
+		$colorBGMsg = wfMessage( 'shoutwiki-' . $skinName . '-sidebar-ad-color-bg' )->inContentLanguage();
+		$colorLinkMsg = wfMessage( 'shoutwiki-' . $skinName . '-sidebar-ad-color-link' )->inContentLanguage();
+		$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-sidebar-ad-color-text' )->inContentLanguage();
+		$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-sidebar-ad-color-url' )->inContentLanguage();
+
+		if ( $wgAdConfig['debug'] === true ) {
+			return '<!-- Begin sidebar ad (ShoutWikiAds) -->
+		<div id="' . $id . '" class="' . $classes . '">
+			<img src="http://www.google.com/help/hc/images/adsense_185665_adformat-text_200x200.png" alt="" />
+		</div>
+<!-- End sidebar ad (ShoutWikiAds) -->' . "\n";
+		}
+
 		return '<!-- Begin sidebar ad (ShoutWikiAds) -->
 		<div id="' . $id . '" class="' . $classes . '">
 <script type="text/javascript"><!--
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
+google_ad_slot = "' . $adSlot . '";
 google_ad_width = 200;
 google_ad_height = 200;
 google_ad_format = "200x200_as";
 google_ad_type = "text";
 google_ad_channel = "";
-google_color_border = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-sidebar-ad-color-border', wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-border' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-border' ) : 'F6F4C4' ) . '";
-google_color_bg = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-sidebar-ad-color-bg', wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-bg' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-bg' ) : 'FFFFE0' ) . '";
-google_color_link = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-sidebar-ad-color-link', wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-link' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-link' ) : '000000' ) . '";
-google_color_text = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-sidebar-ad-color-text', wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-text' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-text' ) : '000000' ) . '";
-google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-sidebar-ad-color-url', wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-url' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-sidebar-ad-color-url' ) : '002BB8' ) . '";
+google_color_border = "' . ( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . '";
+google_color_bg = "' . ( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . '";
+google_color_link = "' . ( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . '";
+google_color_text = "' . ( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . '";
+google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . '";
 //--></script>
 <script type="text/javascript"
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
@@ -162,21 +181,40 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-sidebar-ad-c
 	 * @return String: HTML code
 	 */
 	public static function getLeaderboardHTML() {
-		global $wgAdConfig, $wgUser;
+		global $wgAdConfig;
 
-		$skinName = 'monaco'; // sane default
-		/*
-		$skinObj = $wgUser->getSkin();
-		if ( get_class( $skinObj ) == 'SkinMonaco' ) {
-			$skinName = 'monaco';
-		} elseif ( get_class( $skinObj ) == 'SkinMonoBook' ) {
-			$skinName = 'monobook';
-		}
-		*/
+		$skinName = self::determineSkin();
 
 		$adSlot = '';
-		if ( isset( $wgAdConfig['ad-slot'] ) ) {
-			$adSlot = $wgAdConfig['ad-slot'];
+		if ( isset( $wgAdConfig[$skinName . '-leaderboard-ad-slot'] ) ) {
+			$adSlot = $wgAdConfig[$skinName . '-leaderboard-ad-slot'];
+		}
+
+		$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-border' )->inContentLanguage();
+		$colorBGMsg = wfMessage( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-bg' )->inContentLanguage();
+		$colorLinkMsg = wfMessage( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-link' )->inContentLanguage();
+		$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-text' )->inContentLanguage();
+		$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-url' )->inContentLanguage();
+
+		$colorBorderDefault = 'F6F4C4';
+		$colorBGDefault = 'FFFFE0';
+		$colorLinkDefault = '000000';
+		$colorURLDefault = '002BB8';
+
+		// different defaults for Truglass from old Truglass ad code
+		if ( $skinName == 'truglass' ) {
+			$colorBorderDefault = 'CDCDCD';
+			$colorBGDefault = 'FFFFFF';
+			$colorLinkDefault = '0066FF';
+			$colorURLDefault = '00A000';
+		}
+
+		if ( $wgAdConfig['debug'] === true ) {
+			return '<!-- Begin leaderboard ad (ShoutWikiAds) -->
+		<div id="' . $skinName . '-leaderboard-ad" class="' . $skinName . '-ad noprint">
+			<img src="http://www.google.com/help/hc/images/adsense_185665_adformat-text_728x90.png" alt="" />
+		</div>
+<!-- End leaderboard ad (ShoutWikiAds) -->' . "\n";
 		}
 
 		return '<!-- Begin leaderboard ad (ShoutWikiAds) -->
@@ -187,13 +225,13 @@ google_ad_slot = "' . $adSlot . '";
 google_ad_width = 728;
 google_ad_height = 90;
 google_ad_format = "728x90_as";
-google_ad_type = "text";
+//google_ad_type = "";
 google_ad_channel = "";
-google_color_border = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-border', wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-border' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-border' ) : 'F6F4C4' ) . '";
-google_color_bg = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-bg', wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-bg' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-bg' ) : 'FFFFE0' ) . '";
-google_color_link = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-link', wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-link' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-link' ) : '000000' ) . '";
-google_color_text = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-text', wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-text' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-text' ) : '000000' ) . '";
-google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-url', wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-url' ) ) ? wfMsgForContent( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-url' ) : '002BB8' ) . '";
+google_color_border = "' . ( $borderColorMsg->isDisabled() ? $colorBorderDefault : $borderColorMsg->text() ) . '";
+google_color_bg = "' . ( $colorBGMsg->isDisabled() ? $colorBGDefault : $colorBGMsg->text() ) . '";
+google_color_link = "' . ( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . '";
+google_color_text = "' . ( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . '";
+google_color_url = "' . ( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . '";
 //--></script>
 <script type="text/javascript"
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
@@ -204,25 +242,48 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-' . $skinName . '-leaderboard-
 	}
 
 	/**
-	 * Get the HTML for Monobook toolbox ad (125x125).
+	 * Get the HTML for a toolbox ad (125x125).
 	 * @return HTML
 	 */
 	public static function getToolboxHTML() {
 		global $wgAdConfig;
+
+		$skinName = self::determineSkin();
+
+		$adSlot = '';
+		if ( isset( $wgAdConfig[$skinName . '-button-ad-slot'] ) ) {
+			$adSlot = $wgAdConfig[$skinName . '-button-ad-slot'];
+		}
+
+		$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-toolbox-ad-color-border' )->inContentLanguage();
+		$colorBGMsg = wfMessage( 'shoutwiki-' . $skinName . '-toolbox-ad-color-bg' )->inContentLanguage();
+		$colorLinkMsg = wfMessage( 'shoutwiki-' . $skinName . '-toolbox-ad-color-link' )->inContentLanguage();
+		$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-toolbox-ad-color-text' )->inContentLanguage();
+		$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-toolbox-ad-color-url' )->inContentLanguage();
+
+		if ( $wgAdConfig['debug'] === true ) {
+			return '<!-- Begin toolbox ad (ShoutWikiAds) -->
+<div id="p-ads-left" class="noprint">
+	<img src="http://www.google.com/help/hc/images/adsense_185665_adformat-text_125x125_en.png" alt="" />
+</div>
+<!-- End toolbox ad (ShoutWikiAds) -->' . "\n";
+		}
+
 		return '<!-- Begin toolbox ad (ShoutWikiAds) -->
 <div id="p-ads-left" class="noprint">
 <script type="text/javascript"><!--
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
+google_ad_slot = "' . $adSlot . '";
 google_ad_width = 125;
 google_ad_height = 125;
 google_ad_format = "125x125_as";
 google_ad_type = "text";
 google_ad_channel = "";
-google_color_border = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-toolbox-ad-color-border', wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-border' ) ) ? wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-border' ) : 'F6F4C4' ) . '";
-google_color_bg = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-toolbox-ad-color-bg', wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-bg' ) ) ? wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-bg' ) : 'FFFFE0' ) . '";
-google_color_link = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-toolbox-ad-color-link', wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-link' ) ) ? wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-link' ) : '000000' ) . '";
-google_color_text = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-toolbox-ad-color-text', wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-text' ) ) ? wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-text' ) : '000000' ) . '";
-google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-toolbox-ad-color-url', wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-url' ) ) ? wfMsgForContent( 'shoutwiki-monobook-toolbox-ad-color-url' ) : '002BB8' ) . '";
+google_color_border = "' . ( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . '";
+google_color_bg = "' . ( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . '";
+google_color_link = "' . ( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . '";
+google_color_text = "' . ( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . '";
+google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . '";
 //--></script>
 <script type="text/javascript"
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
@@ -233,26 +294,50 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-toolbox-ad-color-url'
 	}
 
 	/**
-	 * Get a skyscraper ad (currently only for Monobook skin).
-	 * @return HTML
+	 * Get the HTML for a normal skyscraper ad (120x600).
+	 *
+	 * @return String: HTML
 	 */
 	public static function getSkyscraperHTML() {
 		global $wgAdConfig;
+
+		$skinName = self::determineSkin();
+
+		$adSlot = '';
+		if ( isset( $wgAdConfig[$skinName . '-skyscraper-ad-slot'] ) ) {
+			$adSlot = $wgAdConfig[$skinName . '-skyscraper-ad-slot'];
+		}
+
+		$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-rightcolumn-ad-color-border' )->inContentLanguage();
+		$colorBGMsg = wfMessage( 'shoutwiki-' . $skinName . '-rightcolumn-ad-color-bg' )->inContentLanguage();
+		$colorLinkMsg = wfMessage( 'shoutwiki-' . $skinName . '-rightcolumn-ad-color-link' )->inContentLanguage();
+		$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-rightcolumn-ad-color-text' )->inContentLanguage();
+		$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-rightcolumn-ad-color-url' )->inContentLanguage();
+
+		// Just output an image in debug mode
+		if ( $wgAdConfig['debug'] === true ) {
+			return "\n" . '<!-- Begin skyscraper ad (ShoutWikiAds) -->
+<div id="column-google" class="' . $skinName . '-ad noprint">
+	<img src="http://www.google.com/help/hc/images/adsense_185665_adformat-text_120x600.png" alt="" />
+</div>
+<!-- End skyscraper ad (ShoutWikiAds) -->' . "\n";
+		}
+
 		return "\n" . '<!-- Begin skyscraper ad (ShoutWikiAds) -->
-<div id="column-google" class="noprint">
+<div id="column-google" class="' . $skinName . '-ad noprint">
 <script type="text/javascript"><!--
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
-google_ad_slot = "' . $wgAdConfig['ad-slot'] . '";
+google_ad_slot = "' . $adSlot . '";
 google_ad_width = 120;
 google_ad_height = 600;
 google_ad_format = "120x600_as";
-google_ad_type = "text";
+//google_ad_type = "text";
 google_ad_channel = "";
-google_color_border = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-border', wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-border' ) ) ? wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-border' ) : 'F6F4C4' ) . '";
-google_color_bg = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-bg', wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-bg' ) ) ? wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-bg' ) : 'FFFFE0' ) . '";
-google_color_link = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-link', wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-link' ) ) ? wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-link' ) : '000000' ) . '";
-google_color_text = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-text', wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-text' ) ) ? wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-text' ) : '000000' ) . '";
-google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-url', wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-url' ) ) ? wfMsgForContent( 'shoutwiki-monobook-rightcolumn-ad-color-url' ) : '002BB8' ) . '";
+google_color_border = "' . ( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . '";
+google_color_bg = "' . ( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . '";
+google_color_link = "' . ( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . '";
+google_color_text = "' . ( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . '";
+google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . '";
 //--></script>
 <script type="text/javascript"
   src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
@@ -260,6 +345,68 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 
 </div>
 <!-- End skyscraper ad (ShoutWikiAds) -->' . "\n";
+	}
+
+	/**
+	 * Get the HTML for a small square ad (200x200).
+	 *
+	 * @return String: HTML
+	 */
+	public static function getSmallSquareHTML() {
+		global $wgAdConfig;
+
+		$skinName = self::determineSkin();
+
+		$adSlot = '';
+		if ( isset( $wgAdConfig[$skinName . '-small-square-ad-slot'] ) ) {
+			$adSlot = $wgAdConfig[$skinName . '-small-square-ad-slot'];
+		}
+
+		$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-smallsquare-ad-color-border' )->inContentLanguage();
+		$colorBGMsg = wfMessage( 'shoutwiki-' . $skinName . '-smallsquare-ad-color-bg' )->inContentLanguage();
+		$colorLinkMsg = wfMessage( 'shoutwiki-' . $skinName . '-smallsquare-ad-color-link' )->inContentLanguage();
+		$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-smallsquare-ad-color-text' )->inContentLanguage();
+		$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-smallsquare-ad-color-url' )->inContentLanguage();
+
+		// Just output an image in debug mode
+		if ( $wgAdConfig['debug'] === true ) {
+			/*
+			Strangely enough when trying to display the text-only ad (located
+			at http://www.google.com/help/hc/images/adsense_185665_adformat-text_200x200.png),
+			a few pixels are cut off from its right side or at least that's
+			what it looks like to me on Internet Explorer 10 on Windows 7 Ultimate.
+			The image ad, which is what's used below, appears to render correctly.
+			--Jack Phoenix, 3 July 2013
+			*/
+			return "\n" . '<!-- Begin small square (ShoutWikiAds) -->
+<div id="small-square-ad" class="' . $skinName . '-ad noprint">
+	<img src="https://storage.googleapis.com/support-kms-prod/SNP_2922332_en_v0" alt="" />
+</div>
+<!-- End small square (ShoutWikiAds) -->' . "\n";
+		}
+
+		return "\n" . '<!-- Begin small square ad (ShoutWikiAds) -->
+<div id="small-square-ad" class="' . $skinName . '-ad noprint">
+<script type="text/javascript"><!--
+google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
+google_ad_slot = "' . $adSlot . '";
+google_ad_width = 200;
+google_ad_height = 200;
+google_ad_format = "200x200_as";
+//google_ad_type = "text";
+google_ad_channel = "";
+google_color_border = "' . ( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . '";
+google_color_bg = "' . ( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . '";
+google_color_link = "' . ( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . '";
+google_color_text = "' . ( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . '";
+google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . '";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+<!-- End small square ad (ShoutWikiAds) -->' . "\n";
 	}
 
 	/**
@@ -277,11 +424,11 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 			return true;
 		}
 
-		// In order for us to load ad-related CSS, the user must either be very
-		// new (=not autoconfirmed) or have supplied the forceads parameter in
+		// In order for us to load ad-related CSS, the user must either be
+		// a mortal (=not staff) or have supplied the forceads parameter in
 		// the URL
 		if(
-			!$wgUser->isAllowed( 'autoconfirmed' ) ||
+			!in_array( 'staff', $wgUser->getEffectiveGroups() ) ||
 			$wgRequest->getVal( 'forceads' )
 		)
 		{
@@ -301,11 +448,32 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 				if ( get_class( $sk ) == 'SkinMonaco' ) { // Monaco
 					$out->addModuleStyles( 'ext.ShoutWikiAds.monaco' );
 				} elseif( get_class( $sk ) == 'SkinMonoBook' ) { // Monobook
-					if ( $wgAdConfig['right-column'] ) {
+					if ( $wgAdConfig['monobook']['skyscraper'] ) {
 						$out->addModuleStyles( 'ext.ShoutWikiAds.monobook.skyscraper' );
 					}
-					if ( $wgAdConfig['toolbox-button'] ) {
+					if ( $wgAdConfig['monobook']['toolbox'] ) {
 						$out->addModuleStyles( 'ext.ShoutWikiAds.monobook.button' );
+					}
+				} elseif ( get_class( $sk ) == 'SkinVector' ) { // Vector
+					if ( $wgAdConfig['vector']['skyscraper'] ) {
+						$out->addModuleStyles( 'ext.ShoutWikiAds.vector.skyscraper' );
+					}
+					if ( $wgAdConfig['vector']['toolbox'] ) {
+						$out->addModuleStyles( 'ext.ShoutWikiAds.vector.button' );
+					}
+				} elseif ( get_class( $sk ) == 'SkinModern' ) { // Modern
+					if ( $wgAdConfig['modern']['leaderboard'] ) {
+						$out->addModuleStyles( 'ext.ShoutWikiAds.modern.leaderboard' );
+					}
+					// No, the "monobook" here isn't a typo. SkinModern extends
+					// Monobook's base class so there's no specific toggle to
+					// turn off the button ads for Modern...
+					if ( $wgAdConfig['monobook']['toolbox'] ) {
+						$out->addModuleStyles( 'ext.ShoutWikiAds.modern.button' );
+					}
+				} elseif ( get_class( $sk ) == 'SkinCologneBlue' ) { // Cologne Blue
+					if ( $wgAdConfig['cologneblue']['leaderboard'] ) {
+						$out->addModuleStyles( 'ext.ShoutWikiAds.cologneblue.leaderboard' );
 					}
 				} elseif ( get_class( $sk ) == 'SkinTruglass' ) { // Truglass
 					$out->addModuleStyles( 'ext.ShoutWikiAds.truglass' );
@@ -322,7 +490,7 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 	 */
 	public static function onMonoBookAfterToolbox() {
 		global $wgAdConfig;
-		if ( $wgAdConfig['toolbox-button'] ) {
+		if ( $wgAdConfig['monobook']['toolbox'] ) {
 			echo self::loadAd( 'toolbox-button' );
 		}
 		return true;
@@ -334,8 +502,34 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 	 */
 	public static function onMonoBookAfterContent() {
 		global $wgAdConfig;
-		if ( $wgAdConfig['right-column'] ) {
+		if ( $wgAdConfig['monobook']['skyscraper'] ) {
 			echo self::loadAd( 'right-column' );
+		}
+		return true;
+	}
+
+	/**
+	 * Load skyscraper ad for the Vector skin.
+	 *
+	 * @return Boolean: true
+	 */
+	public static function onVectorBeforeFooter() {
+		global $wgAdConfig;
+		if ( $wgAdConfig['vector']['skyscraper'] ) {
+			echo self::loadAd( 'right-column' );
+		}
+		return true;
+	}
+
+	/**
+	 * Load the ad box after the toolbox on the Vector skin.
+	 *
+	 * @return Boolean: true
+	 */
+	public static function onVectorAfterToolbox() {
+		global $wgAdConfig;
+		if ( $wgAdConfig['vector']['toolbox'] ) {
+			echo self::loadAd( 'toolbox-button' );
 		}
 		return true;
 	}
@@ -346,7 +540,7 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 	 */
 	public static function onMonacoSidebar() {
 		global $wgAdConfig;
-		if ( $wgAdConfig['monaco-sidebar'] ) {
+		if ( $wgAdConfig['monaco']['sidebar'] ) {
 			echo self::loadAd( 'sidebar' );
 		}
 		return true;
@@ -358,8 +552,51 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 	 */
 	public static function onMonacoFooter() {
 		global $wgAdConfig;
-		if ( $wgAdConfig['monaco-leaderboard'] ) {
+		if ( $wgAdConfig['monaco']['leaderboard'] ) {
 			echo self::loadAd( 'leaderboard' );
+		}
+		return true;
+	}
+
+	/**
+	 * Load a skyscraper ad in Games skin's "sidebox" (the left-hand box which
+	 * contains social sharing links, recent editors, interlanguage links, etc.
+	 * Look for "$wantSideBox" in /skins/Games/Games.skin.php).
+	 *
+	 * The fugly logic here is pretty much the same as in renderTruglassAd()
+	 * below.
+	 *
+	 * @return Boolean: true
+	 */
+	public static function onGamesSideBox() {
+		global $wgAdConfig;
+		if ( $wgAdConfig['games']['skyscraper'] ) {
+			$skyscraperHTML = self::loadAd( 'right-column' );
+			if ( empty( $skyscraperHTML ) ) {
+				return true;
+			}
+			$leaderboardHTML = str_replace(
+				'<div id="column-google"',
+				'<div id="sideads"',
+				$leaderboardHTML
+			);
+			echo $skyscraperHTML;
+		}
+		return true;
+	}
+
+	/**
+	 * Gets a small square ad to display on Nimbus' left side, after the search
+	 * box and above the "Did you know" bit.
+	 *
+	 * @return Boolean: true
+	 */
+	public static function onNimbusLeftSide() {
+		global $wgAdConfig;
+		if ( $wgAdConfig['nimbus']['sidebar'] ) {
+			$ad = self::loadAd( 'small-square' );
+			$output = '<div class="bottom-left-nav-container">' . $ad . '</div>';
+			echo $output;
 		}
 		return true;
 	}
@@ -367,51 +604,93 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 	/**
 	 * Called *only* by Truglass skin.
 	 *
-	 * @todo FIXME: use self::getLeaderboardHTML() or something for getting the
-	 *              ad code...
 	 * @return Boolean: true
 	 */
 	public static function renderTruglassAd() {
 		global $wgAdConfig;
-		if ( $wgAdConfig['truglass-leaderboard'] ) {
+
+		if ( $wgAdConfig['truglass']['leaderboard'] ) {
+			// Use the universal loader method so that ads aren't shown to
+			// privileged users or on login pages, etc.
+			$leaderboardHTML = self::loadAd( 'leaderboard' );
+
+			// If we hit an early return case, $leaderboardHTML (as returned
+			// by the loadAd method) will be empty and no further processing
+			// should occur.
+			if ( empty( $leaderboardHTML ) ) {
+				return true;
+			}
+
+			// Hack to replace the ad div ID with the "correct" one because
+			// I'm too lazy to edit Truglass' CSS file(s)
+			$leaderboardHTML = str_replace(
+				'<div id="truglass-leaderboard-ad"',
+				'<div id="topadsleft"',
+				$leaderboardHTML
+			);
+
 			echo '<!-- Begin Truglass ad (ShoutWikiAds) -->
 			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-					<tbody>
-						<tr>
-							<td valign="top" id="contentBox">
-								<div id="contentCont">
-										<table id="topsector" width="100%">
-											<tr>
-												<td>
-													<div id="topadsleft" class="noprint">
-														<script type="text/javascript"><!--
-														google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
-														google_alternate_color = "eeeeee";
-														google_ad_width = 728;
-														google_ad_height = 90;
-														google_ad_format = "728x90_as";
-														google_ad_type = "text";
-														google_color_border = "CDCDCD";
-														google_color_bg = "FFFFFF";
-														google_color_link = "0066FF";
-														google_color_url = "00A000";
-														google_color_text = "000000";
-														//-->
-														</script>
-														<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-														</script>
-													</div>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<!-- End Truglass ad (ShoutWikiAds) -->' . "\n";
+				<tbody>
+					<tr>
+						<td valign="top" id="contentBox">
+							<div id="contentCont">
+								<table id="topsector" width="100%">
+									<tr>
+										<td>' . $leaderboardHTML . '</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- End Truglass ad (ShoutWikiAds) -->' . "\n";
 		}
+
 		return true;
+	}
+
+	/**
+	 * Render a leaderboard ad in the site notice area for certain skins.
+	 *
+	 * @param $siteNotice String: existing site notice HTML (etc.), if any
+	 * @return Boolean: true
+	 */
+	public static function onSiteNoticeAfter( &$siteNotice ) {
+		global $wgAdConfig;
+
+		$skinName = self::determineSkin();
+
+		$allowedSkins = array( 'cologneblue', 'modern', 'monobook', 'nimbus', 'vector' );
+		// Monaco and Truglass have a different leaderboard ad implementation
+		// and AdSense's terms of use state that one page may have up to three
+		// ads
+		if (
+			in_array( $skinName, $allowedSkins ) &&
+			isset( $wgAdConfig[$skinName]['leaderboard'] ) &&
+			$wgAdConfig[$skinName]['leaderboard'] === true
+		)
+		{
+			$siteNotice .= self::loadAd( 'leaderboard' );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get the current skin's name for CSS ID & classes and system message names.
+	 *
+	 * @return String: skin name in lowercase
+	 */
+	public static function determineSkin() {
+		global $wgUser;
+
+		$skinObj = $wgUser->getSkin();
+
+		$skinName = strtolower( str_replace( 'Skin', '', get_class( $skinObj ) ) );
+
+		return $skinName;
 	}
 
 	/**
@@ -419,8 +698,10 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 	 * Ad code (div element + JS) is echoed back and no value is returned
 	 * except in special cases we return true (early return cases/unrecognized slot)
 	 *
-	 * @param $type String: what kind of ads to load
-	 * @return Mixed: HTML (on success) or boolean true (on failure)
+	 * @param $type String: what kind of ads to load? Valid values are:
+	 *                      'leaderboard', 'sidebar', 'toolbox-button' and
+	 *                      'right-column' (=skyscraper) so far
+	 * @return String: HTML to output (if any)
 	 */
 	public static function loadAd( $type ) {
 		// Early return cases:
@@ -449,6 +730,8 @@ google_color_url = "' . ( !wfEmptyMsg( 'shoutwiki-monobook-rightcolumn-ad-color-
 			return self::getToolboxHTML();
 		} elseif ( $type === 'right-column' ) {
 			return self::getSkyscraperHTML();
+		} elseif ( $type === 'small-square' ) {
+			return self::getSmallSquareHTML();
 		} else { // invalid type/these ads not enabled in $wgAdConfig
 			return '';
 		}
