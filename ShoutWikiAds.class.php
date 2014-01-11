@@ -684,13 +684,9 @@ google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->
 	 * @return String: skin name in lowercase
 	 */
 	public static function determineSkin() {
-		global $wgUser;
+		global $wgOut;
 
-		$skinObj = $wgUser->getSkin();
-
-		$skinName = strtolower( str_replace( 'Skin', '', get_class( $skinObj ) ) );
-
-		return $skinName;
+		return strtolower( $wgOut->getSkin()->getSkinName() );
 	}
 
 	/**
