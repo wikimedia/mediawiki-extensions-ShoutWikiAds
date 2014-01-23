@@ -20,10 +20,9 @@ class ShoutWikiAds {
 	/**
 	 * Can we show ads on the current page?
 	 *
-	 * @return Boolean: false if ads aren't enabled or the current page is
-	 *                  Special:UserLogin (login page) or if the user is
-	 *                  autoconfirmed and the forceads parameter is NOT in the
-	 *                  URL, otherwise true
+	 * @return bool False if ads aren't enabled or the current page is
+	 *   Special:UserLogin (login page) or if the user is autoconfirmed and the
+	 *   forceads parameter is NOT in the URL, otherwise true.
 	 */
 	public static function canShowAds() {
 		global $wgAdConfig, $wgTitle, $wgUser, $wgRequest;
@@ -32,8 +31,9 @@ class ShoutWikiAds {
 			return false;
 		}
 
+		list( $alias, /*..*/ ) = SpecialPageFactory::resolveAlias( $wgTitle->getDBkey() );
 		if( $wgTitle instanceof Title &&
-				SpecialPage::resolveAlias( $wgTitle->getDBkey() ) == 'Userlogin' ||
+				$alias === 'Userlogin' ||
 			in_array( 'staff', $wgUser->getEffectiveGroups() ) && !$wgRequest->getVal( 'forceads' )
 		)
 		{
@@ -413,9 +413,9 @@ google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->
 	 * This just adds the relevant ad CSS file under certain conditions.
 	 * The actual logic is elsewhere.
 	 *
-	 * @param $out Object: OutputPage instance
-	 * @param $sk Object: instance of Skin or one of its child classes
-	 * @return Boolean: true
+	 * @param OutputPage $out
+	 * @param Skin $sk
+	 * @return bool
 	 */
 	public static function setupAdCSS( &$out, &$sk ) {
 		global $wgAdConfig, $wgRequest, $wgUser;
@@ -436,8 +436,9 @@ google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->
 			$namespace = $title->getNamespace();
 
 			// Okay, the variable name sucks but anyway...normal page != not login page
+			list( $alias, /*..*/ )  = SpecialPageFactory::resolveAlias( $title->getDBkey() );
 			$isNormalPage = $title instanceof Title &&
-				SpecialPage::resolveAlias( $title->getDBkey() ) !== 'Userlogin';
+				$alias !== 'Userlogin';
 
 			// Load ad CSS file when ads are enabled
 			if(
