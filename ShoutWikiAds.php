@@ -18,11 +18,14 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ShoutWiki Ads',
+	'namemsg' => 'extensionname-shoutwikiads',
 	'version' => '0.3.3',
 	'author' => 'Jack Phoenix',
-	'description' => 'Delicious advertisements for everyone!',
+	'descriptionmsg' => 'shoutwikiads-desc',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads',
 );
+
+$wgMessagesDirs['ShoutWikiAds'] = __DIR__ . '/i18n';
 
 // Autoload the class so that we can actually use its functions
 $wgAutoloadClasses['ShoutWikiAds'] = dirname( __FILE__ ) . '/ShoutWikiAds.class.php';
