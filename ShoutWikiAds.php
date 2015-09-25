@@ -18,7 +18,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ShoutWiki Ads',
-	'namemsg' => 'extensionname-shoutwikiads',
+	'namemsg' => 'shoutwikiads-extensionname',
 	'version' => '0.3.3',
 	'author' => 'Jack Phoenix',
 	'descriptionmsg' => 'shoutwikiads-desc',

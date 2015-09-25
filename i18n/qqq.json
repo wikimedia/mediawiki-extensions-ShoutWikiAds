@@ -2,6 +2,6 @@
 	"@metadata": {
 		"authors": []
 	},
-	"extensionname-shoutwikiads": "{{optional}}",
+	"shoutwikiads-extensionname": "{{name}}",
 	"shoutwikiads-desc": "{{desc|what=extension|name=ShoutWiki Ads|url=https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads}}"
 }

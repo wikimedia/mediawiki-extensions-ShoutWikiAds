@@ -2,6 +2,6 @@
 	"@metadata": {
 		"authors": []
 	},
-	"extensionname-shoutwikiads": "ShoutWiki Ads",
+	"shoutwikiads-extensionname": "ShoutWiki Ads",
 	"shoutwikiads-desc": "Displays Google AdSense ads on skins"
 }
