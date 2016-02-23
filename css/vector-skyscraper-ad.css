@@ -1,0 +1,27 @@
+/**
+ * Skyscraper ad styling for the Vector skin
+ */
+div#content {
+	border-right: solid 1px #a7d7f9 !important; /* the color is from skins/vector/images/border.png */
+	margin-right: 125px !important;
+}
+
+#column-google {
+	width: 120px;
+	height: 600px;
+	clear: left;
+	position: absolute;
+	padding-top: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 3px;
+	float: right;
+	right: 0px;
+	top: 85px;
+	z-index: 1;
+}
+
+#footer {
+	/* 75% is not enough, 76% is too much... */
+	width: 75.5%;
+}

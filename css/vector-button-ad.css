@@ -1,0 +1,10 @@
+/**
+ * Button ad styling for the Vector skin
+ */
+#p-ads-left {
+	margin-bottom: 20px;
+	right: 0px;
+	text-align: center;
+	width: 150px;
+	z-index: 1;
+}

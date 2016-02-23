@@ -1,0 +1,22 @@
+#truglass-leaderboard-ad {
+	text-align: center;
+	padding-top: 3px;
+	padding-bottom: 5px;
+}
+
+table.truglass-ad-container {
+	border-collapse: collapse; /* cellspacing=0 equivalent */
+}
+
+table.truglass-ad-container td {
+	border: none;
+	outline: none;
+}
+
+table.truglass-ad-container td, table.truglass-ad-container th {
+	padding: 0; /* cellpadding=0 equivalent */
+}
+
+td#contentBox {
+	vertical-align: top;
+}

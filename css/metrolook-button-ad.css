@@ -1,0 +1,12 @@
+/**
+ * Button ad styling for the Metrolook skin
+ */
+#p-ads-left {
+	padding-left: 5px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	right: 0px;
+	text-align: center;
+	width: 150px;
+	z-index: 1;
+}

@@ -1,0 +1,4 @@
+/** Styling for Quartz's ads -- the selector also matches the sitenotice leaderboard, but that's perfectly fine */
+.quartz-ad {
+	text-align: center;
+}

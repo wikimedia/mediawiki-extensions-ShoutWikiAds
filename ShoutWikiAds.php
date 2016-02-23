@@ -4,51 +4,67 @@
  *
  * @file
  * @ingroup Extensions
- * @version 0.3.3
- * @date 3 July 2013
+ * @version 0.4.2
+ * @date 25 December 2015
  * @author Jack Phoenix <jack@countervandalism.net>
- * @license http://en.wikipedia.org/wiki/Public_domain Public domain
- * @link http://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads Documentation
+ * @license https://en.wikipedia.org/wiki/Public_domain Public domain
+ * @link https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads Documentation
  */
-
-if ( !defined( 'MEDIAWIKI' ) ) {
-	die( 'Go away.' );
-}
 
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ShoutWiki Ads',
-	'namemsg' => 'shoutwikiads-extensionname',
-	'version' => '0.3.3',
+	'version' => '0.4.2',
 	'author' => 'Jack Phoenix',
-	'descriptionmsg' => 'shoutwikiads-desc',
+	'description' => 'Delicious advertisements for everyone!',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads',
 );
 
-$wgMessagesDirs['ShoutWikiAds'] = __DIR__ . '/i18n';
-
 // Autoload the class so that we can actually use its functions
-$wgAutoloadClasses['ShoutWikiAds'] = dirname( __FILE__ ) . '/ShoutWikiAds.class.php';
+$wgAutoloadClasses['ShoutWikiAds'] = __DIR__ . '/ShoutWikiAds.class.php';
+
+// CSS module loading for virtually all skins supported by this extension
+$wgHooks['BeforePageDisplay'][] = 'ShoutWikiAds::setupAdCSS';
+
+// Loads AdSense JS in the bottom of the page if a page has ads
+$wgHooks['SkinAfterBottomScripts'][] = 'ShoutWikiAds::onSkinAfterBottomScripts';
+
+// Aurora
+$wgHooks['AuroraLeftSidebar'][] = 'ShoutWikiAds::onAuroraLeftSidebar';
+$wgHooks['SkinAfterContent'][] = 'ShoutWikiAds::onSkinAfterContent';
 
 // BlueCloud was designed by StrategyWiki with ads in mind, so removing them
 // from it will mess up the display, which is exactly why we don't handle
 // BlueCloud ads here
 
+// Dusk
+$wgHooks['DuskAfterToolbox'][] = 'ShoutWikiAds::onDuskAfterToolbox';
+
+// Home
+$wgHooks['HomeAfterEverything'][] = 'ShoutWikiAds::onHomeAfterEverything';
+
 // Games
 $wgHooks['GamesSideBox'][] = 'ShoutWikiAds::onGamesSideBox';
+
+// Metrolook
+$wgHooks['MetrolookRightPanel'][] = 'ShoutWikiAds::onMetrolookRightPanel';
+$wgHooks['MetrolookAfterToolbox'][] = 'ShoutWikiAds::onMetrolookAfterToolbox';
 
 // Monaco
 $wgHooks['MonacoSetupSkinUserCss'][] = 'ShoutWikiAds::setupAdCSS';
 $wgHooks['MonacoSidebar'][] = 'ShoutWikiAds::onMonacoSidebar';
 $wgHooks['MonacoFooter'][] = 'ShoutWikiAds::onMonacoFooter';
 
-// MonoBook
-$wgHooks['BeforePageDisplay'][] = 'ShoutWikiAds::setupAdCSS';
+// MonoBook & Modern
 $wgHooks['MonoBookAfterContent'][] = 'ShoutWikiAds::onMonoBookAfterContent';
 $wgHooks['MonoBookAfterToolbox'][] = 'ShoutWikiAds::onMonoBookAfterToolbox';
 
 // Nimbus
 $wgHooks['NimbusLeftSide'][] = 'ShoutWikiAds::onNimbusLeftSide';
+
+// Quartz
+$wgHooks['QuartzSidebarWidgets'][] = 'ShoutWikiAds::onQuartzSidebarWidgets';
+$wgHooks['QuartzSidebarWidgetAdvertiser'][] = 'ShoutWikiAds::onQuartzSidebarWidgetAdvertiser';
 
 // Truglass
 $wgHooks['TruglassInContent'][] = 'ShoutWikiAds::renderTruglassAd';
@@ -57,17 +73,46 @@ $wgHooks['TruglassInContent'][] = 'ShoutWikiAds::renderTruglassAd';
 $wgHooks['VectorAfterToolbox'][] = 'ShoutWikiAds::onVectorAfterToolbox';
 $wgHooks['VectorBeforeFooter'][] = 'ShoutWikiAds::onVectorBeforeFooter';
 
-// Generic (Cologne Blue, Modern, Monobook, Nimbus & Vector) leaderboard ad
+// Generic leaderboard ad for most core skins and some custom skins
 $wgHooks['SiteNoticeAfter'][] = 'ShoutWikiAds::onSiteNoticeAfter';
 
 // ResourceLoader support for MediaWiki 1.17+
 $resourceTemplate = array(
-	'localBasePath' => dirname( __FILE__ ),
-	'remoteExtPath' => 'ShoutWikiAds'
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'ShoutWikiAds',
+	'position' => 'top'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.aurora.leaderboard'] = $resourceTemplate + array(
+	'styles' => 'css/aurora-leaderboard-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.aurora.skyscraper'] = $resourceTemplate + array(
+	'styles' => 'css/aurora-skyscraper-ad.css'
 );
 
 $wgResourceModules['ext.ShoutWikiAds.cologneblue.leaderboard'] = $resourceTemplate + array(
 	'styles' => 'css/cologneblue-leaderboard-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.home.leaderboard-bottom'] = $resourceTemplate + array(
+	'styles' => 'css/home-leaderboard-bottom-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.home.skyscraper'] = $resourceTemplate + array(
+	'styles' => 'css/home-skyscraper-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.metrolook.button'] = $resourceTemplate + array(
+	'styles' => 'css/metrolook-button-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.metrolook.leaderboard'] = $resourceTemplate + array(
+	'styles' => 'css/metrolook-leaderboard-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.metrolook.wide-skyscraper'] = $resourceTemplate + array(
+	'styles' => 'css/metrolook-wide-skyscraper-ad.less'
 );
 
 $wgResourceModules['ext.ShoutWikiAds.modern.button'] = $resourceTemplate + array(
@@ -90,6 +135,10 @@ $wgResourceModules['ext.ShoutWikiAds.monobook.skyscraper'] = $resourceTemplate +
 	'styles' => 'css/monobook-skyscraper-ad.css'
 );
 
+$wgResourceModules['ext.ShoutWikiAds.quartz.square'] = $resourceTemplate + array(
+	'styles' => 'css/quartz-square-ad.css'
+);
+
 $wgResourceModules['ext.ShoutWikiAds.vector.button'] = $resourceTemplate + array(
 	'styles' => 'css/vector-button-ad.css'
 );
@@ -98,8 +147,8 @@ $wgResourceModules['ext.ShoutWikiAds.vector.skyscraper'] = $resourceTemplate + a
 	'styles' => 'css/vector-skyscraper-ad.css'
 );
 
-$wgResourceModules['ext.ShoutWikiAds.truglass'] = $resourceTemplate + array(
-	'styles' => 'css/truglass-ads.css'
+$wgResourceModules['ext.ShoutWikiAds.truglass.leaderboard'] = $resourceTemplate + array(
+	'styles' => 'css/truglass-leaderboard-ad.css'
 );
 
 /* Configuration
@@ -107,6 +156,7 @@ $wgAdConfig = array(
 	'enabled' => true, // enabled or not? :P
 	'adsense-client' => '', // provider number w/o the "pub-" part
 	'namespaces' => array( NS_MAIN, NS_TALK ), // array of enabled namespaces
+	'mode' => 'static', // set to 'responsive' for responsive ads instead of fixed-width ads
 
 	// set this to true when developing locally to serve ad *images* (as
 	// opposed to JS code to render ads) from Google's servers
@@ -118,14 +168,23 @@ $wgAdConfig = array(
 	'monobook-button-ad-slot' => '', // 125x125 Monobook ad slot number [Montecito]
 	'vector-button-ad-slot' => '', // 125x125 Vector ad slot number [Montecito]
 
-	'monobook-skyscraper-ad-slot' => '', [Dothan]
-	'vector-skyscraper-ad-slot' => '', [Dothan]
+	'monobook-skyscraper-ad-slot' => '', // [Dothan]
+	'vector-skyscraper-ad-slot' => '', // [Dothan]
 
-	'truglass-leaderboard-ad-slot' => '', [Tabor]
+	'truglass-leaderboard-ad-slot' => '', // [Tabor]
 
 	// Skin-specific ad configuration
+	'aurora' => array(
+		'leaderboard' => true, // leaderboard ad in the site notice area
+		'leaderboard-bottom' => true, // leaderboard ad after categories, in the bottom of the page
+		'skyscraper' => true, // skyscraper ad in the left column, below "Page history" on longer pages
+	),
 	'cologneblue' => array(
 		'leaderboard' => true, // leaderboard ad in the site notice area
+	),
+	'dusk' => array(
+		'banner' => true, // banner in the site notice area
+		'toolbox' => true, // small 125x125px ad below the toolbox in the right-hand sidebar
 	),
 	'modern' => array(
 		'leaderboard' => true, // leaderboard ad in the site notice area

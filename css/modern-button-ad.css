@@ -1,10 +1,9 @@
 /**
- * Button ad styling for Monobook skin
+ * Button ad styling for the Modern skin
  */
 #p-ads-left {
 	right: 0px;
 	top: 10px;
-	width: 150px;
 	z-index: 1;
 	text-align: center;
 }

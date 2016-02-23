@@ -1,0 +1,14 @@
+/** Skyscraper ad styling for the Aurora skin */
+#column-google {
+	height: 600px;
+	margin-bottom: 10px;
+	margin-left: -15px;
+	margin-right: 10px;
+	margin-top: 10px;
+	width: 120px;
+}
+
+/* Need to stretch the content area a "bit" to make the skyscraper fit in the left-hand sidebar... */
+div#content {
+	min-height: 1000px;
+}

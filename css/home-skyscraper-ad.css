@@ -1,0 +1,23 @@
+/**
+ * Skyscraper ad styling for the Home skin
+ */
+.column-google-left {
+	float: left;
+	width: 120px;
+	height: 600px;
+	left: 200px;
+	position: absolute;
+	top: 150px;
+	z-index: 1;
+}
+
+.column-google-right {
+	float: right;
+	right: 200px;
+	top: 150px;
+	width: 120px;
+	height: 600px;
+	float: left;
+	position: absolute;
+	z-index: 1;
+}

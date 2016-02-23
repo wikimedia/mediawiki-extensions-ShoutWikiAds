@@ -1,0 +1,30 @@
+/* Right panel (wide skyscraper ad column, 160x600px by default) */
+div#mw-panel-right {
+	display: none;
+	position: absolute;
+	top: 40px;
+	bottom: 0px;
+	height: auto;
+	overflow: hidden;
+	padding-top: 0.25em;
+	width: 160px;
+	right: 0;
+	z-index: 5;
+}
+
+/**
+ * Don't show the wide skyscraper ad for mobile and other lame clients
+ * The usage of the @media query here is the reason why this is a LESS file
+ * and not a CSS file. With a .css file ext, only the first rule (!) would be
+ * inside the media rule container.
+ */
+@media screen and (min-width: 1300px) {
+	div#mw-panel-right {
+		display: block;
+	}
+
+	/* Don't have page content obscured by the ad column... */
+	div#content {
+		width: 73%;
+	}
+}
