@@ -722,6 +722,11 @@ google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->
 							continue;
 						}
 
+						// Special cases have an awful habit of becoming all too common around here...
+						if ( $skinClass == 'refreshed' && isset( $wgAdConfig['mode'] ) && $wgAdConfig['mode'] === 'responsive' ) {
+							$moduleName = 'ext.ShoutWikiAds.refreshed';
+						}
+
 						if ( $skinClass == 'monaco' ) {
 							$moduleName = "ext.ShoutWikiAds.{$skinClass}";
 						}
@@ -1095,6 +1100,55 @@ google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->
 				'id="quartz-square-ad-2',
 				self::loadAd( 'square' )
 			);
+		}
+		return true;
+	}
+
+	/**
+	 * Renders a leaderboard ad in the footer on the Refreshed skin.
+	 * I18n message is provided by the Refreshed skin in /skins/Refreshed/i18n/<langCode>.json.
+	 *
+	 * @param string $footerExtra
+	 * @return bool
+	 */
+	public static function onRefreshedFooter( &$footerExtra ) {
+		global $wgAdConfig;
+		if (
+			isset( $wgAdConfig['refreshed']['leaderboard-footer'] ) &&
+			$wgAdConfig['refreshed']['leaderboard-footer']
+		)
+		{
+			$adHTML = self::loadAd( 'leaderboard' );
+			$footerExtra = str_replace(
+				// <s>Quick HTML validation fix</s>
+				// Just a simple renaming because Refreshed expects the ID to be #advert :|
+				'<div id="refreshed-leaderboard-ad" class="refreshed-ad noprint">',
+				'<div id="advert" class="refreshed-ad noprint">' .
+					// Also inject the title here, as per the MW.org manual page
+					wfMessage( 'refreshed-advert' )->parseAsBlock(),
+				$adHTML
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * Renders a 200x200 ad in the sidebar on the Refreshed skin.
+	 *
+	 * @param RefreshedTemplate $tpl
+	 * @return bool
+	 */
+	public static function onRefreshedInSidebar( $tpl ) {
+		global $wgAdConfig;
+		if (
+			isset( $wgAdConfig['refreshed']['sidebar'] ) &&
+			$wgAdConfig['refreshed']['sidebar']
+		)
+		{
+			// sic!
+			// The *slot* is _in_ the sidebar, but what we call a sidebar ad
+			// (200x200px) is too wide to be used here!
+			echo self::loadAd( 'toolbox-button' );
 		}
 		return true;
 	}

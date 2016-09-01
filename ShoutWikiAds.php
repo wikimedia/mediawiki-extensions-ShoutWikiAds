@@ -4,8 +4,8 @@
  *
  * @file
  * @ingroup Extensions
- * @version 0.4.2
- * @date 25 December 2015
+ * @version 0.4.3
+ * @date 28 July 2016
  * @author Jack Phoenix <jack@countervandalism.net>
  * @license https://en.wikipedia.org/wiki/Public_domain Public domain
  * @link https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads Documentation
@@ -14,7 +14,7 @@
 // Extension credits that will show up on Special:Version
 $wgExtensionCredits['other'][] = array(
 	'name' => 'ShoutWiki Ads',
-	'version' => '0.4.2',
+	'version' => '0.4.3',
 	'author' => 'Jack Phoenix',
 	'description' => 'Delicious advertisements for everyone!',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads',
@@ -65,6 +65,10 @@ $wgHooks['NimbusLeftSide'][] = 'ShoutWikiAds::onNimbusLeftSide';
 // Quartz
 $wgHooks['QuartzSidebarWidgets'][] = 'ShoutWikiAds::onQuartzSidebarWidgets';
 $wgHooks['QuartzSidebarWidgetAdvertiser'][] = 'ShoutWikiAds::onQuartzSidebarWidgetAdvertiser';
+
+// Refreshed
+$wgHooks['RefreshedFooter'][] = 'ShoutWikiAds::onRefreshedFooter';
+$wgHooks['RefreshedInSidebar'][] = 'ShoutWikiAds::onRefreshedInSidebar';
 
 // Truglass
 $wgHooks['TruglassInContent'][] = 'ShoutWikiAds::renderTruglassAd';
@@ -137,6 +141,14 @@ $wgResourceModules['ext.ShoutWikiAds.monobook.skyscraper'] = $resourceTemplate +
 
 $wgResourceModules['ext.ShoutWikiAds.quartz.square'] = $resourceTemplate + array(
 	'styles' => 'css/quartz-square-ad.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.refreshed'] = $resourceTemplate + array(
+	'styles' => 'css/refreshed.css'
+);
+
+$wgResourceModules['ext.ShoutWikiAds.refreshed.sidebar'] = $resourceTemplate + array( // sic!
+	'styles' => 'css/refreshed-button-ad.css'
 );
 
 $wgResourceModules['ext.ShoutWikiAds.vector.button'] = $resourceTemplate + array(
