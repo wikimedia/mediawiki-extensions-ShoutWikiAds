@@ -16,9 +16,11 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'ShoutWiki Ads',
 	'version' => '0.4.3',
 	'author' => 'Jack Phoenix',
-	'description' => 'Delicious advertisements for everyone!',
+	'descriptionmsg' => 'shoutwikiads-desc',
 	'url' => 'https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads',
 );
+
+$wgMessagesDirs['ShoutWikiAds'] = __DIR__ . '/i18n';
 
 // Autoload the class so that we can actually use its functions
 $wgAutoloadClasses['ShoutWikiAds'] = __DIR__ . '/ShoutWikiAds.class.php';
