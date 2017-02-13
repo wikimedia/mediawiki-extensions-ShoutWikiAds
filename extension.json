@@ -1,0 +1,169 @@
+{
+	"name": "ShoutWikiAds",
+	"version": "0.4.4",
+	"author": [
+		"Jack Phoenix"
+	],
+	"descriptionmsg": "shoutwikiads-desc",
+	"type": "other",
+	"url": "https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads",
+	"MessagesDirs": {
+		"ShoutWikiAds": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"ShoutWikiAds": "ShoutWikiAds.class.php"
+	},
+	"Hooks": {
+		"BeforePageDisplay": "ShoutWikiAds::setupAdCSS",
+		"SkinAfterBottomScripts": "ShoutWikiAds::onSkinAfterBottomScripts",
+		"AuroraLeftSidebar": "ShoutWikiAds::onAuroraLeftSidebar",
+		"SkinAfterContent": "ShoutWikiAds::onSkinAfterContent",
+		"DuskAfterToolbox": "ShoutWikiAds::onDuskAfterToolbox",
+		"HomeAfterEverything": "ShoutWikiAds::onHomeAfterEverything",
+		"GamesSideBox": "ShoutWikiAds::onGameSideBox",
+		"MetrolookRightPanel": "ShoutWikiAds::onMetrolookRightPanel",
+		"MetrolookAfterToolbox": "ShoutWikiAds::onMetrolookAfterToolbox",
+		"MonacoSetupSkinUserCss": "ShoutWikiAds::setupAdCSS",
+		"MonacoSidebar": "ShoutWikiAds::onMonacoSidebar",
+		"MonacoFooter": "ShoutWikiAds::onMonacoFooter",
+		"MonoBookAfterContent": "ShoutWikiAds::onMonoBookAfterContent",
+		"MonoBookAfterToolbox": "ShoutWikiAds::onMonoBookAfterToolbox",
+		"NimbusLeftSide": "ShoutWikiAds::onNimbusLeftSide",
+		"QuartzSidebarWidgets": "ShoutWikiAds::onQuartzSidebarWidgets",
+		"QuartzSidebarWidgetAdvertiser": "ShoutWikiAds::onQuartzSidebarWidgetAdvertiser",
+		"RefreshedFooter": "ShoutWikiAds::onRefreshedFooter",
+		"RefreshedInSidebar": "ShoutWikiAds::onRefreshedInSidebar",
+		"TruglassInContent": "ShoutWikiAds::renderTruglassAd",
+		"VectorAfterToolbox": "ShoutWikiAds::onVectorAfterToolbox",
+		"VectorBeforeFooter": "ShoutWikiAds::onVectorBeforeFooter",
+		"SiteNoticeAfter": "ShoutWikiAds::onSiteNoticeAfter"
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "ShoutWikiAds"
+	},
+	"ResourceModules": {
+		"ext.ShoutWikiAds.aurora.leaderboard": {
+			"styles": "css/aurora-leaderboard-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.aurora.skyscraper": {
+			"styles": "css/aurora-skyscraper-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.cologneblue.leaderboard": {
+			"styles": "css/cologneblue-leaderboard-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.home.leaderboard-bottom": {
+			"styles": "css/home-leaderboard-bottom-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.home.skyscraper": {
+			"styles": "css/home-skyscraper-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.metrolook.button": {
+			"styles": "css/metrolook-button-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.metrolook.leaderboard": {
+			"styles": "css/metrolook-leaderboard-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.metrolook-wide-skyscraper": {
+			"styles": "css/metrolook-wide-skyscraper-ad.less",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.modern.button": {
+			"styles": "css/modern-button-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.modern.leaderboard": {
+			"styles": "css/modern-leaderboard-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.monaco": {
+			"styles": "css/monaco-ads.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.monobook.button": {
+			"styles": "css/monobook-button-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.monobook.skyscraper": {
+			"styles": "css/monobook-skyscraper-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.quartz.square": {
+			"styles": "css/quartz-square-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.refreshed": {
+			"styles": "css/refreshed.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.refreshed.sidebar": {
+			"styles": "css/refreshed-button-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.vector.button": {
+			"styles": "css/vector-button-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.vector.skyscraper": {
+			"styles": "css/vector-skyscraper-ad.css",
+			"position": "top"
+		},
+		"ext.ShoutWikiAds.truglass.leaderboard": {
+			"styles": "css/truglass-leaderboard-ad.css",
+			"position": "top"
+		}
+	},
+	"config": {
+		"AdConfig": {
+			"enabled": true,
+			"adsense-client": "",
+			"namespaces": [
+				0,
+				1
+			],
+			"mode": "static",
+			"debug": false,
+			"monaco-leaderboard-ad-slot": "",
+			"monaco-small-square-ad-slot": "",
+			"monaco-button-ad-slot": "",
+			"monobook-skyscraper-ad-slot": "",
+			"truglass-leaderboard-ad-slot": "",
+			"vector-button-ad-slot": "",
+			"vector-skyscraper-ad-slot": "",
+			"aurora": {
+				"leaderboard": true,
+				"leaderboard-bottom": true,
+				"skyscraper": true
+			},
+			"cologneblue": {
+				"banner": true,
+				"toolbox": true
+			},
+			"modern": {
+				"leaderboard": true
+			},
+			"monobook": {
+				"sidebar": true,
+				"leaderboard": true
+			},
+			"truglass": {
+				"leaderboard": true
+			},
+			"vector": {
+				"leaderboard": true,
+				"skyscraper": true,
+				"toolbox": true
+			}
+		}
+	},
+	"manifest_version": 1
+}
