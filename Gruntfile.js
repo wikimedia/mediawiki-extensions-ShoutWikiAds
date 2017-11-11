@@ -24,7 +24,8 @@ module.exports = function ( grunt ) {
 			all: [
 				'*.json',
 				'i18n/*.json',
-				'!node_modules/**'
+				'!node_modules/**',
+				'!vendor/**'
 			]
 		}
 	} );
