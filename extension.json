@@ -47,80 +47,61 @@
 	},
 	"ResourceModules": {
 		"ext.ShoutWikiAds.aurora.leaderboard": {
-			"styles": "css/aurora/aurora-leaderboard-ad.css",
-			"position": "top"
+			"styles": "css/aurora/aurora-leaderboard-ad.css"
 		},
 		"ext.ShoutWikiAds.aurora.skyscraper": {
-			"styles": "css/aurora/aurora-skyscraper-ad.css",
-			"position": "top"
+			"styles": "css/aurora/aurora-skyscraper-ad.css"
 		},
 		"ext.ShoutWikiAds.cologneblue.leaderboard": {
-			"styles": "css/cologneblue/cologneblue-leaderboard-ad.css",
-			"position": "top"
+			"styles": "css/cologneblue/cologneblue-leaderboard-ad.css"
 		},
 		"ext.ShoutWikiAds.home.leaderboard-bottom": {
-			"styles": "css/home/home-leaderboard-bottom-ad.css",
-			"position": "top"
+			"styles": "css/home/home-leaderboard-bottom-ad.css"
 		},
 		"ext.ShoutWikiAds.home.skyscraper": {
-			"styles": "css/home/home-skyscraper-ad.css",
-			"position": "top"
+			"styles": "css/home/home-skyscraper-ad.css"
 		},
 		"ext.ShoutWikiAds.metrolook.button": {
-			"styles": "css/metrolook/metrolook-button-ad.css",
-			"position": "top"
+			"styles": "css/metrolook/metrolook-button-ad.css"
 		},
 		"ext.ShoutWikiAds.metrolook.leaderboard": {
-			"styles": "css/metrolook/metrolook-leaderboard-ad.css",
-			"position": "top"
+			"styles": "css/metrolook/metrolook-leaderboard-ad.css"
 		},
 		"ext.ShoutWikiAds.metrolook-wide-skyscraper": {
-			"styles": "css/metrolook/metrolook-wide-skyscraper-ad.less",
-			"position": "top"
+			"styles": "css/metrolook/metrolook-wide-skyscraper-ad.less"
 		},
 		"ext.ShoutWikiAds.modern.button": {
-			"styles": "css/modern/modern-button-ad.css",
-			"position": "top"
+			"styles": "css/modern/modern-button-ad.css"
 		},
 		"ext.ShoutWikiAds.modern.leaderboard": {
-			"styles": "css/modern/modern-leaderboard-ad.css",
-			"position": "top"
+			"styles": "css/modern/modern-leaderboard-ad.css"
 		},
 		"ext.ShoutWikiAds.monaco": {
-			"styles": "css/monaco/monaco-ads.css",
-			"position": "top"
+			"styles": "css/monaco/monaco-ads.css"
 		},
 		"ext.ShoutWikiAds.monobook.button": {
-			"styles": "css/monobook/monobook-button-ad.css",
-			"position": "top"
+			"styles": "css/monobook/monobook-button-ad.css"
 		},
 		"ext.ShoutWikiAds.monobook.skyscraper": {
-			"styles": "css/monobook/monobook-skyscraper-ad.css",
-			"position": "top"
+			"styles": "css/monobook/monobook-skyscraper-ad.css"
 		},
 		"ext.ShoutWikiAds.quartz.square": {
-			"styles": "css/quartz/quartz-square-ad.css",
-			"position": "top"
+			"styles": "css/quartz/quartz-square-ad.css"
 		},
 		"ext.ShoutWikiAds.refreshed": {
-			"styles": "css/refreshed/refreshed.css",
-			"position": "top"
+			"styles": "css/refreshed/refreshed.css"
 		},
 		"ext.ShoutWikiAds.refreshed.sidebar": {
-			"styles": "css/refreshed/refreshed-button-ad.css",
-			"position": "top"
+			"styles": "css/refreshed/refreshed-button-ad.css"
 		},
 		"ext.ShoutWikiAds.vector.button": {
-			"styles": "css/vector/vector-button-ad.css",
-			"position": "top"
+			"styles": "css/vector/vector-button-ad.css"
 		},
 		"ext.ShoutWikiAds.vector.skyscraper": {
-			"styles": "css/vector/vector-skyscraper-ad.css",
-			"position": "top"
+			"styles": "css/vector/vector-skyscraper-ad.css"
 		},
 		"ext.ShoutWikiAds.truglass.leaderboard": {
-			"styles": "css/truglass/truglass-leaderboard-ad.css",
-			"position": "top"
+			"styles": "css/truglass/truglass-leaderboard-ad.css"
 		}
 	},
 	"config": {
