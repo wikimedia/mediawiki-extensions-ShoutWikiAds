@@ -1054,7 +1054,11 @@ google_color_url = "' . ( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->
 	 */
 	public static function onNimbusLeftSide() {
 		global $wgAdConfig;
-		if ( $wgAdConfig['nimbus']['sidebar'] ) {
+		if (
+			isset( $wgAdConfig['nimbus']['sidebar'] ) &&
+			$wgAdConfig['nimbus']['sidebar']
+		)
+		{
 			$ad = self::loadAd( 'small-square' );
 			$output = '<div class="bottom-left-nav-container">' . $ad . '</div>';
 			echo $output;
