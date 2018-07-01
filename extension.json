@@ -1,6 +1,6 @@
 {
 	"name": "ShoutWikiAds",
-	"version": "0.4.5",
+	"version": "0.4.6",
 	"author": [
 		"Jack Phoenix"
 	],
@@ -23,7 +23,7 @@
 		"SkinAfterContent": "ShoutWikiAds::onSkinAfterContent",
 		"DuskAfterToolbox": "ShoutWikiAds::onDuskAfterToolbox",
 		"HomeAfterEverything": "ShoutWikiAds::onHomeAfterEverything",
-		"GamesSideBox": "ShoutWikiAds::onGameSideBox",
+		"GamesSideBox": "ShoutWikiAds::onGamesSideBox",
 		"MetrolookRightPanel": "ShoutWikiAds::onMetrolookRightPanel",
 		"MetrolookAfterToolbox": "ShoutWikiAds::onMetrolookAfterToolbox",
 		"MonacoSetupSkinUserCss": "ShoutWikiAds::setupAdCSS",
