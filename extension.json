@@ -1,6 +1,6 @@
 {
 	"name": "ShoutWikiAds",
-	"version": "0.4.7",
+	"version": "0.4.8",
 	"author": [
 		"Jack Phoenix"
 	],
@@ -83,7 +83,14 @@
 			"styles": "css/monobook/monobook-button-ad.css"
 		},
 		"ext.ShoutWikiAds.monobook.skyscraper": {
-			"styles": "css/monobook/monobook-skyscraper-ad.css"
+			"styles": {
+				"css/monobook/monobook-skyscraper-ad.css": {
+					"media": "screen and (min-width: 551px)"
+				},
+				"css/monobook/monobook-skyscraper-ad-mobile.css": {
+					"media": "screen and (max-width: 550px)"
+				}
+			}
 		},
 		"ext.ShoutWikiAds.quartz.square": {
 			"styles": "css/quartz/quartz-square-ad.css"
