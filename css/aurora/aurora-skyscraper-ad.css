@@ -12,3 +12,10 @@
 div#content {
 	min-height: 1000px;
 }
+
+/* Also stretch the left-hand (on LTR interface) menu as needed
+ * @see http://www.shoutwiki.com/w/index.php?oldid=30105#Advertising_on_the_left_side_of_the_Aurora_skin
+ */
+#menu-left {
+     width: 11em;
+}
