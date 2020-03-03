@@ -34,12 +34,13 @@ class ShoutWikiAds {
 	/**
 	 * Can we show ads on the current page?
 	 *
+	 * @param User $user
 	 * @return bool False if ads aren't enabled or the current page is
 	 *   Special:UserLogin (login page) or if the user is autoconfirmed and the
 	 *   forceads parameter is NOT in the URL, otherwise true.
 	 */
-	public static function canShowAds() {
-		global $wgAdConfig, $wgTitle, $wgUser, $wgRequest;
+	private static function canShowAds( User $user ) {
+		global $wgAdConfig, $wgTitle, $wgRequest;
 
 		if ( !$wgAdConfig['enabled'] ) {
 			return false;
@@ -47,7 +48,7 @@ class ShoutWikiAds {
 
 		if ( $wgTitle instanceof Title &&
 				$wgTitle->isSpecial( 'Userlogin' ) ||
-			in_array( 'staff', $wgUser->getEffectiveGroups() ) && !$wgRequest->getVal( 'forceads' )
+			in_array( 'staff', $user->getEffectiveGroups() ) && !$wgRequest->getVal( 'forceads' )
 		)
 		{
 			return false;
@@ -656,7 +657,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * @return bool
 	 */
 	public static function setupAdCSS( &$out, &$sk ) {
-		global $wgAdConfig, $wgResourceModules, $wgRequest, $wgUser;
+		global $wgAdConfig, $wgResourceModules, $wgRequest;
 
 		if ( !$wgAdConfig['enabled'] ) {
 			return true;
@@ -666,7 +667,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		// a mortal (=not staff) or have supplied the forceads parameter in
 		// the URL
 		if (
-			!in_array( 'staff', $wgUser->getEffectiveGroups() ) ||
+			!in_array( 'staff', $out->getUser()->getEffectiveGroups() ) ||
 			$wgRequest->getVal( 'forceads' )
 		)
 		{
@@ -730,9 +731,10 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	/**
 	 * Load toolbox ad for Monobook *and* Modern skins.
 	 *
+	 * @param MonoBookTemplate $template MonoBookTemplate instance
 	 * @return bool
 	 */
-	public static function onMonoBookAfterToolbox() {
+	public static function onMonoBookAfterToolbox( $template ) {
 		global $wgAdConfig;
 
 		// Modern extends Monobook's base class, and therefore this is needed
@@ -745,7 +747,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$wgAdConfig[$skin]['toolbox']
 		)
 		{
-			echo self::loadAd( 'toolbox-button' );
+			echo self::loadAd( 'toolbox-button', $template->getSkin()->getUser() );
 		}
 
 		return true;
@@ -891,7 +893,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$wgAdConfig['home']['leaderboard-bottom']
 		)
 		{
-			$data = self::loadAd( 'leaderboard' );
+			$data = self::loadAd( 'leaderboard', $skin->getUser() );
 		}
 
 		return true;
@@ -911,7 +913,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$wgAdConfig['dusk']['toolbox']
 		)
 		{
-			echo self::loadAd( 'toolbox-button' );
+			echo self::loadAd( 'toolbox-button', $dusk->getSkin()->getUser() );
 		}
 		return true;
 	}
@@ -992,7 +994,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$wgAdConfig['metrolook']['toolbox']
 		)
 		{
-			echo self::loadAd( 'toolbox-button' );
+			echo self::loadAd( 'toolbox-button', $metraLookTemplate->getSkin()->getUser() );
 		}
 		return true;
 	}
@@ -1011,7 +1013,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		)
 		{
 			// Oh gods why...
-			$s = self::loadAd( 'wide-skyscraper' );
+			$s = self::loadAd( 'wide-skyscraper', $metraLookTemplate->getSkin()->getUser() );
 			$s = str_replace(
 				array( '<div id="column-google" class="metrolook-ad noprint">', '</div>' ),
 				'',
@@ -1128,7 +1130,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			// sic!
 			// The *slot* is _in_ the sidebar, but what we call a sidebar ad
 			// (200x200px) is too wide to be used here!
-			echo self::loadAd( 'toolbox-button' );
+			echo self::loadAd( 'toolbox-button', $tpl->getSkin()->getUser() );
 		}
 		return true;
 	}
@@ -1185,12 +1187,14 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * advertising configuration (or a banner ad for Dusk).
 	 *
 	 * @param string $siteNotice Existing site notice HTML (etc.), if any
+	 * @param Skin $skin
 	 * @return bool
 	 */
-	public static function onSiteNoticeAfter( &$siteNotice ) {
+	public static function onSiteNoticeAfter( &$siteNotice, Skin $skin ) {
 		global $wgAdConfig;
 
 		$skinName = self::determineSkin();
+		$user = $skin->getUser();
 
 		// Monaco and Truglass have a different leaderboard ad implementation
 		// and AdSense's terms of use state that one page may have up to three
@@ -1204,7 +1208,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$wgAdConfig[$skinName]['leaderboard'] === true
 		)
 		{
-			$siteNotice .= self::loadAd( 'leaderboard' );
+			$siteNotice .= self::loadAd( 'leaderboard', $user );
 		} elseif (
 			// Both Dusk* skins have a damn small content area; in fact, it's
 			// so small it can't fit a normal leaderboard, so we display a banner
@@ -1214,7 +1218,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$wgAdConfig[$skinName]['banner'] === true
 		)
 		{
-			$siteNotice .= self::loadAd( 'banner' );
+			$siteNotice .= self::loadAd( 'banner', $user );
 		}
 
 		return true;
@@ -1265,15 +1269,21 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * return/unrecognized slot, we return an empty string.
 	 *
 	 * @param string $type What kind of ads to load?
+	 * @param User|null $user A user to pass, if available
 	 * @return string HTML to output (if any)
 	 */
-	public static function loadAd( $type ) {
+	private static function loadAd( $type, $user = null ) {
+		if ( $user === null ) {
+			// Caller does not have a user
+			$user = RequestContext::getMain()->getUser();
+		}
+
 		// Early return cases:
 		// ** if we can't show ads on the current page (i.e. if it's the login
 		// page or something)
 		// ** if the wiki's language code isn't supported by Google AdSense
 		// ** if ads aren't enabled for the current namespace
-		if ( !self::canShowAds() ) {
+		if ( !self::canShowAds( $user ) ) {
 			wfDebugLog( 'ShoutWikiAds', 'Early return case #1: can\'t show ads' );
 			return '';
 		}
