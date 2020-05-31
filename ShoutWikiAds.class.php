@@ -1238,6 +1238,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * @return bool
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+		global $wgAdConfig;
 		if (
 			self::$PAGE_HAS_ADS &&
 			// This code loads all AdSense code, lets always do it with the async code.
