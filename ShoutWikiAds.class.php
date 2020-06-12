@@ -91,6 +91,8 @@ class ShoutWikiAds {
 			'sl', 'et',
 			// Indonesian http://adsense.blogspot.co.uk/2012/02/adsense-now-speaks-indonesian.html
 			'id',
+			// Languages added post 2013 -
+			'bn', 'ca', 'tl', 'hi', 'ms', 'ml', 'mr', 'sr-el', 'es-419', 'ta', 'te', 'ur',
 		);
 
 		if ( in_array( $wgLanguageCode, $supportedAdLanguages ) ) {
