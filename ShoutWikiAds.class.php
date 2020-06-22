@@ -731,28 +731,27 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	}
 
 	/**
-	 * Load toolbox ad for Monobook *and* Modern skins.
+	 * Load toolbox ad for Monobook, Modern and Vector skins
 	 *
-	 * @param MonoBookTemplate $template MonoBookTemplate instance
-	 * @return bool
+	 * @param Skin $skin
+	 * @param string $portlet
+	 * @param string &$html
 	 */
-	public static function onMonoBookAfterToolbox( $template ) {
+	public static function onSkinAfterPortlet( Skin $skin, $portlet, &$html ) {
 		global $wgAdConfig;
 
-		// Modern extends Monobook's base class, and therefore this is needed
-		// so that we can, for example, have the toolbox button ad *enabled*
-		// for Monobook and disabled for Modern. :-(
-		$skin = self::determineSkin();
+		$skins = [ 'vector', 'modern', 'monobook' ];
+		$user = $skin->getUser();
+		$skin = $skin->getSkinName();
 
-		if (
+		if ( in_array( $skin, $skins ) &&
 			isset( $wgAdConfig[$skin]['toolbox'] ) &&
-			$wgAdConfig[$skin]['toolbox']
+			$wgAdConfig[$skin]['toolbox'] &&
+			$portlet === 'tb'
 		)
 		{
-			echo self::loadAd( 'toolbox-button', $template->getSkin()->getUser() );
+			$html .= self::loadAd( 'toolbox-button', $user );
 		}
-
-		return true;
 	}
 
 	/**
@@ -785,23 +784,6 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		)
 		{
 			echo self::loadAd( 'right-column' );
-		}
-		return true;
-	}
-
-	/**
-	 * Load the ad box after the toolbox on the Vector skin.
-	 *
-	 * @return bool
-	 */
-	public static function onVectorAfterToolbox() {
-		global $wgAdConfig;
-		if (
-			isset( $wgAdConfig['vector']['toolbox'] ) &&
-			$wgAdConfig['vector']['toolbox']
-		)
-		{
-			echo self::loadAd( 'toolbox-button' );
 		}
 		return true;
 	}

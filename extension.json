@@ -8,6 +8,9 @@
 	"descriptionmsg": "shoutwikiads-desc",
 	"type": "other",
 	"url": "https://www.mediawiki.org/wiki/Extension:ShoutWiki_Ads",
+	"requires": {
+		"MediaWiki": ">= 1.35.0"
+	},
 	"MessagesDirs": {
 		"ShoutWikiAds": [
 			"i18n"
@@ -21,6 +24,7 @@
 		"SkinAfterBottomScripts": "ShoutWikiAds::onSkinAfterBottomScripts",
 		"AuroraLeftSidebar": "ShoutWikiAds::onAuroraLeftSidebar",
 		"SkinAfterContent": "ShoutWikiAds::onSkinAfterContent",
+		"SkinAfterPortlet": "ShoutWikiAds::onSkinAfterPortlet",
 		"DuskAfterToolbox": "ShoutWikiAds::onDuskAfterToolbox",
 		"HomeAfterEverything": "ShoutWikiAds::onHomeAfterEverything",
 		"GamesSideBox": "ShoutWikiAds::onGamesSideBox",
@@ -30,14 +34,12 @@
 		"MonacoSidebar": "ShoutWikiAds::onMonacoSidebar",
 		"MonacoFooter": "ShoutWikiAds::onMonacoFooter",
 		"MonoBookAfterContent": "ShoutWikiAds::onMonoBookAfterContent",
-		"MonoBookAfterToolbox": "ShoutWikiAds::onMonoBookAfterToolbox",
 		"NimbusLeftSide": "ShoutWikiAds::onNimbusLeftSide",
 		"QuartzSidebarWidgets": "ShoutWikiAds::onQuartzSidebarWidgets",
 		"QuartzSidebarWidgetAdvertiser": "ShoutWikiAds::onQuartzSidebarWidgetAdvertiser",
 		"RefreshedFooter": "ShoutWikiAds::onRefreshedFooter",
 		"RefreshedInSidebar": "ShoutWikiAds::onRefreshedInSidebar",
 		"TruglassInContent": "ShoutWikiAds::renderTruglassAd",
-		"VectorAfterToolbox": "ShoutWikiAds::onVectorAfterToolbox",
 		"VectorBeforeFooter": "ShoutWikiAds::onVectorBeforeFooter",
 		"SiteNoticeAfter": "ShoutWikiAds::onSiteNoticeAfter"
 	},
