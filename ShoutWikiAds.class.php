@@ -772,23 +772,6 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	}
 
 	/**
-	 * Load skyscraper ad for the Vector skin.
-	 *
-	 * @return bool
-	 */
-	public static function onVectorBeforeFooter() {
-		global $wgAdConfig;
-		if (
-			isset( $wgAdConfig['vector']['skyscraper'] ) &&
-			$wgAdConfig['vector']['skyscraper']
-		)
-		{
-			echo self::loadAd( 'right-column' );
-		}
-		return true;
-	}
-
-	/**
 	 * Load sidebar ad for Monaco skin.
 	 *
 	 * @return bool
@@ -856,6 +839,8 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	public static function onSkinAfterContent( &$data, Skin $skin ) {
 		global $wgAdConfig;
 
+		$skinName = $skin->getSkinName();
+
 		if (
 			get_class( $skin ) == 'SkinAurora' &&
 			isset( $wgAdConfig['aurora']['leaderboard-bottom'] ) &&
@@ -872,12 +857,25 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		}
 
 		if (
+			$skinName === 'vector' &&
+			isset( $wgAdConfig['vector']['skyscraper'] ) &&
+			$wgAdConfig['vector']['skyscraper']
+		)
+		{
+			$data = self::loadAd( 'right-column' );
+		}
+
+		if (
 			get_class( $skin ) == 'SkinHome' &&
 			isset( $wgAdConfig['home']['leaderboard-bottom'] ) &&
 			$wgAdConfig['home']['leaderboard-bottom']
 		)
 		{
 			$data = self::loadAd( 'leaderboard', $skin->getUser() );
+		}
+
+		if ( $skinName === 'monobook' ) {
+			ShoutWikiAds::onMonoBookAfterContent();
 		}
 
 		return true;
