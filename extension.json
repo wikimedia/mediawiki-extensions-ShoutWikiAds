@@ -33,14 +33,12 @@
 		"MonacoSetupSkinUserCss": "ShoutWikiAds::setupAdCSS",
 		"MonacoSidebar": "ShoutWikiAds::onMonacoSidebar",
 		"MonacoFooter": "ShoutWikiAds::onMonacoFooter",
-		"MonoBookAfterContent": "ShoutWikiAds::onMonoBookAfterContent",
 		"NimbusLeftSide": "ShoutWikiAds::onNimbusLeftSide",
 		"QuartzSidebarWidgets": "ShoutWikiAds::onQuartzSidebarWidgets",
 		"QuartzSidebarWidgetAdvertiser": "ShoutWikiAds::onQuartzSidebarWidgetAdvertiser",
 		"RefreshedFooter": "ShoutWikiAds::onRefreshedFooter",
 		"RefreshedInSidebar": "ShoutWikiAds::onRefreshedInSidebar",
 		"TruglassInContent": "ShoutWikiAds::renderTruglassAd",
-		"VectorBeforeFooter": "ShoutWikiAds::onVectorBeforeFooter",
 		"SiteNoticeAfter": "ShoutWikiAds::onSiteNoticeAfter"
 	},
 	"ResourceFileModulePaths": {
