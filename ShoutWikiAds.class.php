@@ -659,7 +659,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * @return bool
 	 */
 	public static function setupAdCSS( &$out, &$sk ) {
-		global $wgAdConfig, $wgResourceModules, $wgRequest;
+		global $wgAdConfig;
 
 		if ( !$wgAdConfig['enabled'] ) {
 			return true;
@@ -670,9 +670,8 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		// the URL
 		if (
 			!in_array( 'staff', $out->getUser()->getEffectiveGroups() ) ||
-			$wgRequest->getVal( 'forceads' )
-		)
-		{
+			$out->getRequest()->getVal( 'forceads' )
+		) {
 			$title = $out->getTitle();
 			$namespace = $title->getNamespace();
 
@@ -684,13 +683,14 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			if (
 				$isNormalPage &&
 				in_array( $namespace, $wgAdConfig['namespaces'] )
-			)
-			{
+			) {
 				$skinClass = str_replace( 'Skin', '', get_class( $sk ) );
 				$skinClass = strtolower( $skinClass );
 
 				if ( isset( $wgAdConfig[$skinClass] ) ) {
-					$modules = array();
+					$modules = [];
+
+					$resourceLoader = $out->getResourceLoader();
 
 					// Iterate over the enabled
 					foreach ( $wgAdConfig[$skinClass] as $enabledAdType => $unused ) {
@@ -715,7 +715,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 						}
 
 						// Sanity check -- is there such a module?
-						if ( isset( $wgResourceModules[$moduleName] ) && $wgResourceModules[$moduleName] ) {
+						if ( $resourceLoader->isModuleRegistered( $moduleName ) && $resourceLoader->getModule( $moduleName ) ) {
 							$modules[] = $moduleName;
 						}
 					}
