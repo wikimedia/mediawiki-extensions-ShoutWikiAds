@@ -69,7 +69,7 @@
 		"ext.ShoutWikiAds.metrolook.leaderboard": {
 			"styles": "css/metrolook/metrolook-leaderboard-ad.css"
 		},
-		"ext.ShoutWikiAds.metrolook-wide-skyscraper": {
+		"ext.ShoutWikiAds.metrolook.wide-skyscraper": {
 			"styles": "css/metrolook/metrolook-wide-skyscraper-ad.less"
 		},
 		"ext.ShoutWikiAds.modern.button": {
