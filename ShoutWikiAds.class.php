@@ -46,11 +46,10 @@ class ShoutWikiAds {
 			return false;
 		}
 
-		if ( $wgTitle instanceof Title &&
-				$wgTitle->isSpecial( 'Userlogin' ) ||
+		if (
+			$wgTitle instanceof Title && $wgTitle->isSpecial( 'Userlogin' ) ||
 			in_array( 'staff', $user->getEffectiveGroups() ) && !$wgRequest->getVal( 'forceads' )
-		)
-		{
+		) {
 			return false;
 		}
 
@@ -74,7 +73,7 @@ class ShoutWikiAds {
 		// "Publishers are also not permitted to place AdSense code on pages
 		// with content primarily in an unsupported language"
 		// @see https://www.google.com/adsense/support/bin/answer.py?answer=9727
-		$supportedAdLanguages = array(
+		$supportedAdLanguages = [
 			// Arabic -> Dutch (+some Chinese variants)
 			'ar', 'bg', 'zh', 'zh-hans', 'zh-hant', 'hr', 'cs', 'da', 'nl',
 			// English and its variants
@@ -93,7 +92,7 @@ class ShoutWikiAds {
 			'id',
 			// Languages added post 2013 -
 			'bn', 'ca', 'tl', 'hi', 'ms', 'ml', 'mr', 'sr-el', 'es-419', 'ta', 'te', 'ur',
-		);
+		];
 
 		if ( in_array( $wgLanguageCode, $supportedAdLanguages ) ) {
 			return true;
@@ -744,31 +743,14 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		$user = $skin->getUser();
 		$skin = $skin->getSkinName();
 
-		if ( in_array( $skin, $skins ) &&
+		if (
+			in_array( $skin, $skins ) &&
 			isset( $wgAdConfig[$skin]['toolbox'] ) &&
 			$wgAdConfig[$skin]['toolbox'] &&
 			$portlet === 'tb'
-		)
-		{
+		) {
 			$html .= self::loadAd( 'toolbox-button', $user );
 		}
-	}
-
-	/**
-	 * Load skyscraper ad for Monobook skin.
-	 *
-	 * @return bool
-	 */
-	public static function onMonoBookAfterContent() {
-		global $wgAdConfig;
-		if (
-			isset( $wgAdConfig['monobook']['skyscraper'] ) &&
-			$wgAdConfig['monobook']['skyscraper']
-		)
-		{
-			echo self::loadAd( 'right-column' );
-		}
-		return true;
 	}
 
 	/**
@@ -781,8 +763,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['monaco']['sidebar'] ) &&
 			$wgAdConfig['monaco']['sidebar']
-		)
-		{
+		) {
 			echo self::loadAd( 'sidebar' );
 		}
 		return true;
@@ -798,8 +779,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['monaco']['leaderboard'] ) &&
 			$wgAdConfig['monaco']['leaderboard']
-		)
-		{
+		) {
 			echo self::loadAd( 'leaderboard' );
 		}
 		return true;
@@ -817,8 +797,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['aurora']['skyscraper'] ) &&
 			$wgAdConfig['aurora']['skyscraper']
-		)
-		{
+		) {
 			// Only show this ad on existing pages as it'd strech nonexistent ones
 			// quite a bit
 			if ( $auroraTemplate->getSkin()->getTitle()->exists() ) {
@@ -840,14 +819,14 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		global $wgAdConfig;
 
 		$skinName = $skin->getSkinName();
+		$user = $skin->getUser();
 
 		if (
-			get_class( $skin ) == 'SkinAurora' &&
+			$skinName === 'aurora' &&
 			isset( $wgAdConfig['aurora']['leaderboard-bottom'] ) &&
 			$wgAdConfig['aurora']['leaderboard-bottom']
-		)
-		{
-			$adHTML = self::loadAd( 'leaderboard' );
+		) {
+			$adHTML = self::loadAd( 'leaderboard', $user );
 			$data = str_replace(
 				// Quick HTML validation fix
 				'<div id="aurora-leaderboard-ad"',
@@ -860,22 +839,24 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$skinName === 'vector' &&
 			isset( $wgAdConfig['vector']['skyscraper'] ) &&
 			$wgAdConfig['vector']['skyscraper']
-		)
-		{
-			$data = self::loadAd( 'right-column' );
+		) {
+			$data = self::loadAd( 'right-column', $user );
 		}
 
 		if (
-			get_class( $skin ) == 'SkinHome' &&
+			$skinName === 'home' &&
 			isset( $wgAdConfig['home']['leaderboard-bottom'] ) &&
 			$wgAdConfig['home']['leaderboard-bottom']
-		)
-		{
-			$data = self::loadAd( 'leaderboard', $skin->getUser() );
+		) {
+			$data = self::loadAd( 'leaderboard', $user );
 		}
 
-		if ( $skinName === 'monobook' ) {
-			ShoutWikiAds::onMonoBookAfterContent();
+		if (
+			$skinName === 'monobook' &&
+			isset( $wgAdConfig['monobook']['skyscraper'] ) &&
+			$wgAdConfig['monobook']['skyscraper']
+		) {
+			$data = self::loadAd( 'right-column', $user );
 		}
 
 		return true;
@@ -893,8 +874,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['dusk']['toolbox'] ) &&
 			$wgAdConfig['dusk']['toolbox']
-		)
-		{
+		) {
 			echo self::loadAd( 'toolbox-button', $dusk->getSkin()->getUser() );
 		}
 		return true;
@@ -915,8 +895,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['games']['skyscraper'] ) &&
 			$wgAdConfig['games']['skyscraper']
-		)
-		{
+		) {
 			$skyscraperHTML = self::loadAd( 'right-column' );
 			if ( empty( $skyscraperHTML ) ) {
 				return true;
@@ -942,8 +921,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['home']['skyscraper'] ) &&
 			$wgAdConfig['home']['skyscraper']
-		)
-		{
+		) {
 			$adHTML = self::loadAd( 'skyscraper' );
 			if ( $adHTML ) {
 				// Remove the IDs altogether
@@ -974,8 +952,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['metrolook']['toolbox'] ) &&
 			$wgAdConfig['metrolook']['toolbox']
-		)
-		{
+		) {
 			echo self::loadAd( 'toolbox-button', $metrolookTemplate->getSkin()->getUser() );
 		}
 		return true;
@@ -992,12 +969,11 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['metrolook']['wide-skyscraper'] ) &&
 			$wgAdConfig['metrolook']['wide-skyscraper']
-		)
-		{
+		) {
 			// Oh gods why...
 			$s = self::loadAd( 'wide-skyscraper', $metrolookTemplate->getSkin()->getUser() );
 			$s = str_replace(
-				array( '<div id="column-google" class="metrolook-ad noprint">', '</div>' ),
+				[ '<div id="column-google" class="metrolook-ad noprint">', '</div>' ],
 				'',
 				$s
 			);
@@ -1017,8 +993,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['nimbus']['sidebar'] ) &&
 			$wgAdConfig['nimbus']['sidebar']
-		)
-		{
+		) {
 			$ad = self::loadAd( 'small-square' );
 			$output = '<div class="bottom-left-nav-container">' . $ad . '</div>';
 			echo $output;
@@ -1038,8 +1013,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['quartz']['square'] ) &&
 			$wgAdConfig['quartz']['square']
-		)
-		{
+		) {
 			$adBody = self::loadAd( 'square' );
 		}
 		return true;
@@ -1057,8 +1031,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['quartz']['square'] ) &&
 			$wgAdConfig['quartz']['square']
-		)
-		{
+		) {
 			$adBody = str_replace(
 				'id="quartz-square-ad',
 				'id="quartz-square-ad-2',
@@ -1080,8 +1053,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['refreshed']['leaderboard-footer'] ) &&
 			$wgAdConfig['refreshed']['leaderboard-footer']
-		)
-		{
+		) {
 			$adHTML = self::loadAd( 'leaderboard' );
 			$footerExtra = str_replace(
 				// <s>Quick HTML validation fix</s>
@@ -1107,8 +1079,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['refreshed']['sidebar'] ) &&
 			$wgAdConfig['refreshed']['sidebar']
-		)
-		{
+		) {
 			// sic!
 			// The *slot* is _in_ the sidebar, but what we call a sidebar ad
 			// (200x200px) is too wide to be used here!
@@ -1128,8 +1099,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		if (
 			isset( $wgAdConfig['truglass']['leaderboard'] ) &&
 			$wgAdConfig['truglass']['leaderboard']
-		)
-		{
+		) {
 			// Use the universal loader method so that ads aren't shown to
 			// privileged users or on login pages, etc.
 			$leaderboardHTML = self::loadAd( 'leaderboard' );
@@ -1181,15 +1151,14 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		// Monaco and Truglass have a different leaderboard ad implementation
 		// and AdSense's terms of use state that one page may have up to three
 		// ads; Dusk & DuskToDawn are handled below, as you can see.
-		$blacklist = array(
+		$blacklist = [
 			'dusk', 'dusktodawn', 'monaco', 'truglass'
-		);
+		];
 		if (
 			!in_array( $skinName, $blacklist ) &&
 			isset( $wgAdConfig[$skinName]['leaderboard'] ) &&
 			$wgAdConfig[$skinName]['leaderboard'] === true
-		)
-		{
+		) {
 			$siteNotice .= self::loadAd( 'leaderboard', $user );
 		} elseif (
 			// Both Dusk* skins have a damn small content area; in fact, it's
@@ -1198,8 +1167,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			( $skinName == 'dusk' || $skinName == 'dusktodawn' ) &&
 			isset( $wgAdConfig[$skinName]['banner'] ) &&
 			$wgAdConfig[$skinName]['banner'] === true
-		)
-		{
+		) {
 			$siteNotice .= self::loadAd( 'banner', $user );
 		}
 
@@ -1228,8 +1196,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			//$wgAdConfig['mode'] == 'responsive' &&
 			isset( $wgAdConfig['debug'] ) &&
 			$wgAdConfig['debug'] === false
-		)
-		{
+		) {
 			$text .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>' . "\n";
 		}
 		return true;
@@ -1282,10 +1249,10 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		}
 
 		// Main ad logic starts here
-		$allowedAdTypes = array(
+		$allowedAdTypes = [
 			'banner', 'leaderboard', 'sidebar', 'toolbox-button',
 			'right-column', 'skyscraper', 'small-square', 'square', 'wide-skyscraper'
-		);
+		];
 		if ( in_array( $type, $allowedAdTypes ) ) {
 			self::$PAGE_HAS_ADS = true;
 		}
