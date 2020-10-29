@@ -978,7 +978,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$wgAdConfig['metrolook']['toolbox']
 		)
 		{
-			echo self::loadAd( 'toolbox-button', $metraLookTemplate->getSkin()->getUser() );
+			echo self::loadAd( 'toolbox-button', $metrolookTemplate->getSkin()->getUser() );
 		}
 		return true;
 	}
@@ -997,7 +997,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		)
 		{
 			// Oh gods why...
-			$s = self::loadAd( 'wide-skyscraper', $metraLookTemplate->getSkin()->getUser() );
+			$s = self::loadAd( 'wide-skyscraper', $metrolookTemplate->getSkin()->getUser() );
 			$s = str_replace(
 				array( '<div id="column-google" class="metrolook-ad noprint">', '</div>' ),
 				'',
