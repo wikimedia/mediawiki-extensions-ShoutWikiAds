@@ -1185,12 +1185,17 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 *
 	 * @param Skin $skin
 	 * @param string $text
-	 * @return bool
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		global $wgAdConfig;
 		if (
 			self::$PAGE_HAS_ADS &&
+			// Development trick/tweak: check AdSense publisher ID's presence to _not_
+			// load this on devboxes. Apparently calling self::canShowAds( $skin->getUser() )
+			// doesn't work for some reason, and the ad debug mode check below evaluates to true
+			// when a custom ad config has not been set up due to the presence of sane defaults
+			// in extension.json.
+			!empty( $wgAdConfig['adsense-client'] ) &&
 			// This code loads all AdSense code, lets always do it with the async code.
 			//isset( $wgAdConfig['mode'] ) &&
 			//$wgAdConfig['mode'] == 'responsive' &&
@@ -1199,7 +1204,6 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		) {
 			$text .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>' . "\n";
 		}
-		return true;
 	}
 
 	/**
