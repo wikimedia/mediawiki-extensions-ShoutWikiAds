@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ShoutWikiAds class -- contains the hooked functions and some other crap for
  * displaying the advertisements.
@@ -683,7 +684,8 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 				$isNormalPage &&
 				in_array( $namespace, $wgAdConfig['namespaces'] )
 			) {
-				$skinClass = str_replace( 'Skin', '', get_class( $sk ) );
+				// Use reflection, some skins are namespaced.
+				$skinClass = str_replace( 'Skin', '', ( new ReflectionClass( $sk ) )->getShortName() );
 				$skinClass = strtolower( $skinClass );
 
 				if ( isset( $wgAdConfig[$skinClass] ) ) {
@@ -1203,6 +1205,31 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$wgAdConfig['debug'] === false
 		) {
 			$text .= '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>' . "\n";
+		}
+	}
+
+	/**
+	 * Render a right rail module ad for Mirage.
+	 *
+	 * @param IContextSource $context
+	 * @param array $modules
+	 */
+	public static function onMirageGetRightRailModules( $context, array &$modules ) {
+		global $wgAdConfig;
+		if (
+			isset( $wgAdConfig['mirage']['square'] ) &&
+			$wgAdConfig['mirage']['square']
+		) {
+			$ad = self::loadAd( 'square', $context->getUser() );
+
+			// The ad should come first, to keep it into view.
+			$modules = [
+				'MirageAdModule' => [
+					'factory' => function ( $skin ) use ( $ad ) {
+						return new MirageAdModule( $skin, $ad );
+					}
+				]
+			] + $modules;
 		}
 	}
 

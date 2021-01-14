@@ -17,7 +17,8 @@
 		]
 	},
 	"AutoloadClasses": {
-		"ShoutWikiAds": "ShoutWikiAds.class.php"
+		"ShoutWikiAds": "ShoutWikiAds.class.php",
+		"MirageAdModule": "MirageAdModule.php"
 	},
 	"Hooks": {
 		"BeforePageDisplay": "ShoutWikiAds::setupAdCSS",
@@ -30,6 +31,7 @@
 		"GamesSideBox": "ShoutWikiAds::onGamesSideBox",
 		"MetrolookRightPanel": "ShoutWikiAds::onMetrolookRightPanel",
 		"MetrolookAfterToolbox": "ShoutWikiAds::onMetrolookAfterToolbox",
+		"MirageGetRightRailModules": "ShoutWikiAds::onMirageGetRightRailModules",
 		"MonacoSetupSkinUserCss": "ShoutWikiAds::setupAdCSS",
 		"MonacoSidebar": "ShoutWikiAds::onMonacoSidebar",
 		"MonacoFooter": "ShoutWikiAds::onMonacoFooter",
@@ -69,6 +71,9 @@
 		},
 		"ext.ShoutWikiAds.metrolook.wide-skyscraper": {
 			"styles": "css/metrolook/metrolook-wide-skyscraper-ad.less"
+		},
+		"ext.ShoutWikiAds.mirage.square": {
+			"styles": "css/mirage/mirage-square-ad.css"
 		},
 		"ext.ShoutWikiAds.modern.button": {
 			"styles": "css/modern/modern-button-ad.css"
@@ -136,6 +141,10 @@
 			"cologneblue": {
 				"banner": true,
 				"toolbox": true
+			},
+			"mirage": {
+				"leaderboard": true,
+				"square": true
 			},
 			"modern": {
 				"leaderboard": true
