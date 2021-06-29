@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 /**
  * ShoutWikiAds class -- contains the hooked functions and some other crap for
  * displaying the advertisements.
@@ -47,9 +49,10 @@ class ShoutWikiAds {
 			return false;
 		}
 
+		$effectiveGroups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserEffectiveGroups( $user );
 		if (
 			$wgTitle instanceof Title && $wgTitle->isSpecial( 'Userlogin' ) ||
-			in_array( 'staff', $user->getEffectiveGroups() ) && !$wgRequest->getVal( 'forceads' )
+			in_array( 'staff', $effectiveGroups ) && !$wgRequest->getVal( 'forceads' )
 		) {
 			return false;
 		}
@@ -668,8 +671,10 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		// In order for us to load ad-related CSS, the user must either be
 		// a mortal (=not staff) or have supplied the forceads parameter in
 		// the URL
+		$effectiveGroups = MediaWikiServices::getInstance()->getUserGroupManager()
+			->getUserEffectiveGroups( $out->getUser() );
 		if (
-			!in_array( 'staff', $out->getUser()->getEffectiveGroups() ) ||
+			!in_array( 'staff', $effectiveGroups ) ||
 			$out->getRequest()->getVal( 'forceads' )
 		) {
 			$title = $out->getTitle();
