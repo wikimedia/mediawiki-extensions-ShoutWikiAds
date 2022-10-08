@@ -114,6 +114,9 @@ class ShoutWikiAds {
 		global $wgAdConfig;
 
 		$title = RequestContext::getMain()->getTitle(); // @todo FIXME filthy hack
+		if ( !$title ) {
+			return false;
+		}
 		$namespace = $title->getNamespace();
 
 		if ( in_array( $namespace, $wgAdConfig['namespaces'] ) ) {
