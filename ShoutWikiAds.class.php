@@ -696,6 +696,19 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 				$skinClass = str_replace( 'Skin', '', ( new ReflectionClass( $sk ) )->getShortName() );
 				$skinClass = strtolower( $skinClass );
 
+				// New Vector nonsense
+				if ( $skinClass === 'vectorlegacy' ) {
+					$skinClass = 'vector';
+				}
+
+				// Fixes the issue where $skinClass gets set to "mustache"
+				// for MonoBook in MW 1.39
+				// (the strtolower() is just additional paranoia, probably not
+				// even really needed, eh)
+				if ( strtolower( $sk->getSkinName() ) !== $skinClass ) {
+					$skinClass = strtolower( $sk->getSkinName() );
+				}
+
 				if ( isset( $wgAdConfig[$skinClass] ) ) {
 					$modules = [];
 
