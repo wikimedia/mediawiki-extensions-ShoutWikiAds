@@ -2,7 +2,9 @@
  * Skyscraper ad styling for the Vector skin
  */
 div#content {
-	border-right: solid 1px #a7d7f9 !important; /* the color is from skins/vector/images/border.png */
+	border-right-style: solid;
+	border-right-width: 1px;
+	/* inherit the border color to not mess up themes etc. */
 	margin-right: 125px !important;
 }
 
