@@ -155,7 +155,7 @@ class ShoutWikiAds {
 				style="display:block"
 				data-ad-client="ca-pub-' . $wgAdConfig['adsense-client'] . '"
 				data-ad-slot="' . $adSlot . '"
-				data-ad-format="auto"></ins>
+				data-ad-format="horizontal"></ins>
 			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 		} else {
 			$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-banner-ad-color-border' )->inContentLanguage();
@@ -177,7 +177,7 @@ class ShoutWikiAds {
 				$colorURLDefault = '00A000';
 			}
 
-			$adHTML = '<script type="text/javascript"><!--
+			$adHTML = '<script type="text/javascript">
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
 google_ad_slot = "' . $adSlot . '";
 google_ad_width = 468;
@@ -190,7 +190,8 @@ google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefa
 google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
 google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
 google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
-//--></script>';
+</script>
+<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
 
 		return '<!-- Begin banner ad (ShoutWikiAds) -->
@@ -247,7 +248,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLD
 				style="display:block"
 				data-ad-client="ca-pub-' . $wgAdConfig['adsense-client'] . '"
 				data-ad-slot="' . $adSlot . '"
-				data-ad-format="auto"></ins>
+				data-ad-format="rectangle"></ins>
 			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 		} else {
 			$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-sidebar-ad-color-border' )->inContentLanguage();
@@ -256,7 +257,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLD
 			$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-sidebar-ad-color-text' )->inContentLanguage();
 			$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-sidebar-ad-color-url' )->inContentLanguage();
 
-			$adHTML = '<script type="text/javascript"><!--
+			$adHTML = '<script type="text/javascript">
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
 google_ad_slot = "' . $adSlot . '";
 google_ad_width = 200;
@@ -269,7 +270,8 @@ google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $
 google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
 google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
 google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
-//--></script>';
+</script>
+<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
 
 		return '<!-- Begin sidebar ad (ShoutWikiAds) -->
@@ -305,7 +307,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 				style="display:block"
 				data-ad-client="ca-pub-' . $wgAdConfig['adsense-client'] . '"
 				data-ad-slot="' . $adSlot . '"
-				data-ad-format="auto"></ins>
+				data-ad-format="rectangle"></ins>
 			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 		} else {
 			$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-square-ad-color-border' )->inContentLanguage();
@@ -319,7 +321,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$colorLinkDefault = '000000';
 			$colorURLDefault = '002BB8';
 
-			$adHTML = '<script type="text/javascript"><!--
+			$adHTML = '<script type="text/javascript">
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
 google_ad_slot = "' . $adSlot . '";
 google_ad_width = 250;
@@ -332,7 +334,8 @@ google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefa
 google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
 google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
 google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
-//--></script>';
+</script>
+<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
 
 		return '<!-- Begin square ad (ShoutWikiAds) -->
@@ -370,7 +373,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLD
 				style="display:block"
 				data-ad-client="ca-pub-' . $wgAdConfig['adsense-client'] . '"
 				data-ad-slot="' . $adSlot . '"
-				data-ad-format="vertical,horizontal"></ins>
+				data-ad-format="horizontal"></ins>
 			<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 		} else {
 			$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-leaderboard-ad-color-border' )->inContentLanguage();
@@ -392,7 +395,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLD
 				$colorURLDefault = '00A000';
 			}
 
-			$adHTML = '<script type="text/javascript"><!--
+			$adHTML = '<script type="text/javascript">
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
 google_ad_slot = "' . $adSlot . '";
 google_ad_width = 728;
@@ -405,7 +408,8 @@ google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefa
 google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
 google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
 google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
-//--></script>';
+</script>
+<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
 
 		return '<!-- Begin leaderboard ad (ShoutWikiAds) -->
@@ -442,7 +446,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLD
 		style="display:block"
 		data-ad-client="ca-pub-' . $wgAdConfig['adsense-client'] . '"
 		data-ad-slot="' . $adSlot . '"
-		data-ad-format="auto"></ins>
+		data-ad-format="rectangle"></ins>
 	<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 		} else {
 			$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-toolbox-ad-color-border' )->inContentLanguage();
@@ -451,7 +455,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLD
 			$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-toolbox-ad-color-text' )->inContentLanguage();
 			$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-toolbox-ad-color-url' )->inContentLanguage();
 
-			$adHTML = '<script type="text/javascript"><!--
+			$adHTML = '<script type="text/javascript">
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
 google_ad_slot = "' . $adSlot . '";
 google_ad_width = 125;
@@ -464,7 +468,8 @@ google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $
 google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
 google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
 google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
-//--></script>';
+</script>
+<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
 
 		return '<!-- Begin toolbox ad (ShoutWikiAds) -->
@@ -501,7 +506,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		style="display:block"
 		data-ad-client="ca-pub-' . $wgAdConfig['adsense-client'] . '"
 		data-ad-slot="' . $adSlot . '"
-		data-ad-format="auto"></ins>
+		data-ad-format="vertical"></ins>
 	<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 		} else {
 			$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-rightcolumn-ad-color-border' )->inContentLanguage();
@@ -510,7 +515,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-rightcolumn-ad-color-text' )->inContentLanguage();
 			$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-rightcolumn-ad-color-url' )->inContentLanguage();
 
-			$adHTML = '<script type="text/javascript"><!--
+			$adHTML = '<script type="text/javascript">
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
 google_ad_slot = "' . $adSlot . '";
 google_ad_width = 120;
@@ -523,7 +528,8 @@ google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $
 google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
 google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
 google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
-//--></script>';
+</script>
+<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
 
 		return "\n" . '<!-- Begin skyscraper ad (ShoutWikiAds) -->
@@ -569,7 +575,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-wide-skyscraper-ad-color-text' )->inContentLanguage();
 			$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-wide-skyscraper-ad-color-url' )->inContentLanguage();
 
-			$adHTML = '<script type="text/javascript"><!--
+			$adHTML = '<script type="text/javascript">
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
 google_ad_slot = "' . $adSlot . '";
 google_ad_width = 160;
@@ -582,7 +588,8 @@ google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $
 google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
 google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
 google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
-//--></script>';
+</script>
+<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
 
 		return "\n" . '<!-- Begin wide skyscraper ad (ShoutWikiAds) -->
@@ -627,7 +634,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 		style="display:block"
 		data-ad-client="ca-pub-' . $wgAdConfig['adsense-client'] . '"
 		data-ad-slot="' . $adSlot . '"
-		data-ad-format="auto"></ins>
+		data-ad-format="rectangle"></ins>
 	<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
 		} else {
 			$borderColorMsg = wfMessage( 'shoutwiki-' . $skinName . '-smallsquare-ad-color-border' )->inContentLanguage();
@@ -636,7 +643,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			$colorTextMsg = wfMessage( 'shoutwiki-' . $skinName . '-smallsquare-ad-color-text' )->inContentLanguage();
 			$colorURLMsg = wfMessage( 'shoutwiki-' . $skinName . '-smallsquare-ad-color-url' )->inContentLanguage();
 
-			$adHTML = '<script type="text/javascript"><!--
+			$adHTML = '<script type="text/javascript">
 google_ad_client = "pub-' . $wgAdConfig['adsense-client'] . '";
 google_ad_slot = "' . $adSlot . '";
 google_ad_width = 200;
@@ -649,7 +656,8 @@ google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $
 google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
 google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
 google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
-//--></script>';
+</script>
+<script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
 
 		return "\n" . '<!-- Begin small square ad (ShoutWikiAds) -->
@@ -1084,8 +1092,8 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 				// Just a simple renaming because Refreshed expects the ID to be #advert :|
 				'<div id="refreshed-leaderboard-ad" class="refreshed-ad noprint">',
 				'<div id="advert" class="refreshed-ad noprint">' .
-					// Also inject the title here, as per the MW.org manual page
-					wfMessage( 'refreshed-advert' )->parseAsBlock(),
+				// Also inject the title here, as per the MW.org manual page
+				wfMessage( 'refreshed-advert' )->parseAsBlock(),
 				$adHTML
 			);
 		}
@@ -1220,9 +1228,8 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			// when a custom ad config has not been set up due to the presence of sane defaults
 			// in extension.json.
 			!empty( $wgAdConfig['adsense-client'] ) &&
-			// This code loads all AdSense code, lets always do it with the async code.
-			//isset( $wgAdConfig['mode'] ) &&
-			//$wgAdConfig['mode'] == 'responsive' &&
+			isset( $wgAdConfig['mode'] ) &&
+			$wgAdConfig['mode'] == 'responsive' &&
 			isset( $wgAdConfig['debug'] ) &&
 			$wgAdConfig['debug'] === false
 		) {
