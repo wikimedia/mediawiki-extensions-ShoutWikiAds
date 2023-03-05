@@ -81,11 +81,11 @@ class ShoutWikiAds {
 			// Arabic -> Dutch (+some Chinese variants)
 			'ar', 'bg', 'zh', 'zh-hans', 'zh-hant', 'hr', 'cs', 'da', 'nl',
 			// English and its variants
-			'en', 'en-gb', 'en-lolcat', 'en-piglatin', 'en-ca', 'en-x-piglatin',
+			'en', 'en-gb', 'en-ca', 'en-x-piglatin',
 			// Finnish -> Polish
-			'fi', 'fr', 'de', 'el', 'he', 'hu', 'it', 'ja', 'ko', 'no', 'pl',
+			'fi', 'fr', 'de', 'el', 'he', 'hu', 'hu-formal', 'it', 'ja', 'ko', 'no', 'pl',
 			// Portuguese -> Turkish
-			'pt', 'ro', 'ru', 'sr', 'sr-ec', 'sk', 'es', 'sv', 'th', 'tr',
+			'pt', 'pt-br', 'ro', 'ru', 'sr', 'sr-ec', 'sr-el', 'sk', 'es', 'sv', 'th', 'tr',
 			// http://adsense.blogspot.com/2009/08/adsense-launched-in-lithuanian.html
 			'lt', 'lv', 'uk',
 			// Vietnamese http://adsense.blogspot.co.uk/2013/05/adsense-now-speaks-vietnamese.html
@@ -95,8 +95,8 @@ class ShoutWikiAds {
 			// Indonesian http://adsense.blogspot.co.uk/2012/02/adsense-now-speaks-indonesian.html
 			'id',
 			// Languages added post 2013 -
-			'bn', 'ca', 'tl', 'hi', 'ms', 'ml', 'mr', 'sr-el', 'es-419', 'ta', 'te', 'ur',
-			'gu', 'hu-formal', 'kn', 'ko-kp', 'pt-br', 'pnb', 'pa', 'sr-el'
+			'bn', 'ca', 'tl', 'hi', 'ms', 'ml', 'mr', 'es-419', 'ta', 'te', 'ur',
+			'gu', 'kn', 'ko-kp', 'pnb', 'pa'
 		];
 
 		if ( in_array( $wgLanguageCode, $supportedAdLanguages ) ) {
@@ -1092,8 +1092,8 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 				// Just a simple renaming because Refreshed expects the ID to be #advert :|
 				'<div id="refreshed-leaderboard-ad" class="refreshed-ad noprint">',
 				'<div id="advert" class="refreshed-ad noprint">' .
-				// Also inject the title here, as per the MW.org manual page
-				wfMessage( 'refreshed-advert' )->parseAsBlock(),
+					// Also inject the title here, as per the MW.org manual page
+					wfMessage( 'refreshed-advert' )->parseAsBlock(),
 				$adHTML
 			);
 		}
