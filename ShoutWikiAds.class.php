@@ -81,7 +81,7 @@ class ShoutWikiAds {
 			// Arabic -> Dutch (+some Chinese variants)
 			'ar', 'bg', 'zh', 'zh-hans', 'zh-hant', 'hr', 'cs', 'da', 'nl',
 			// English and its variants
-			'en', 'en-gb', 'en-lolcat', 'en-piglatin',
+			'en', 'en-gb', 'en-lolcat', 'en-piglatin', 'en-ca', 'en-x-piglatin',
 			// Finnish -> Polish
 			'fi', 'fr', 'de', 'el', 'he', 'hu', 'it', 'ja', 'ko', 'no', 'pl',
 			// Portuguese -> Turkish
@@ -96,6 +96,7 @@ class ShoutWikiAds {
 			'id',
 			// Languages added post 2013 -
 			'bn', 'ca', 'tl', 'hi', 'ms', 'ml', 'mr', 'sr-el', 'es-419', 'ta', 'te', 'ur',
+			'gu', 'hu-formal', 'kn', 'ko-kp', 'pt-br', 'pnb', 'pa', 'sr-el'
 		];
 
 		if ( in_array( $wgLanguageCode, $supportedAdLanguages ) ) {
