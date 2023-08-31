@@ -209,26 +209,10 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLD
 	public static function getSidebarHTML() {
 		global $wgAdConfig;
 
-		$skinName = 'monaco';
-		$id = "{$skinName}-sidebar-ad";
-		$classes = "{$skinName}-ad noprint";
-		// The code below might be useful, but it's not necessary currently
-		// as Monobook cannot support this type of ad (Monobook has right
-		// column and toolbox ads only)
-		/*
 		$skinName = self::determineSkin();
 
 		$id = "{$skinName}-sidebar-ad";
 		$classes = "{$skinName}-ad noprint";
-		// Different IDs and classes for Monaco and Monobook
-		if ( $skinName == 'monobook' ) {
-			$id = 'column-google';
-			$classes = 'noprint';
-		} elseif ( $skinName == 'monaco' ) {
-			$id = "{$skinName}-sidebar-ad";
-			$classes = "{$skinName}-ad noprint";
-		}
-		*/
 
 		$adSlot = '';
 		if ( isset( $wgAdConfig[$skinName . '-small-square-ad-slot'] ) ) {
