@@ -8,12 +8,15 @@ table.truglass-ad-container {
 	border-collapse: collapse; /* cellspacing=0 equivalent */
 }
 
+/* stylelint-disable declaration-property-value-disallowed-list */
 table.truglass-ad-container td {
 	border: none;
 	outline: none;
 }
+/* stylelint-enable declaration-property-value-disallowed-list */
 
-table.truglass-ad-container td, table.truglass-ad-container th {
+table.truglass-ad-container td,
+table.truglass-ad-container th {
 	padding: 0; /* cellpadding=0 equivalent */
 }
 

@@ -1,18 +1,18 @@
-@media (max-width: 500px) {
+@media ( max-width: 500px ) {
 	.adsbygoogle {
 		width: 320px;
 		height: 50px;
 	}
 }
 
-@media (max-width:799px) {
+@media ( max-width: 799px ) {
 	.adsbygoogle {
 		width: 480px;
 		height: 60px;
 	}
 }
 
-@media (min-width: 800px) {
+@media ( min-width: 800px ) {
 	.adsbygoogle {
 		width: 728px;
 		height: 90px;

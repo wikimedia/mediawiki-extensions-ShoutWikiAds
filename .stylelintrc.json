@@ -1,0 +1,9 @@
+{
+	"extends": "stylelint-config-wikimedia",
+	"rules": {
+		"declaration-block-no-redundant-longhand-properties": null,
+		"declaration-no-important": null,
+		"length-zero-no-unit": null,
+		"selector-max-id": null
+	}
+}

@@ -2,7 +2,7 @@
  * Skyscraper ad styling for Monobook skin
  */
 div#content {
-	border-right: solid 1px #aaaaaa !important; /* yes, the important is needed...lame */
+	border-right: solid 1px #aaa !important; /* yes, the important is needed...lame */
 	margin-top: 2.8em !important;
 	margin-right: 125px !important;
 	margin-bottom: 0 !important;
