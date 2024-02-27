@@ -30,7 +30,9 @@ class ShoutWikiAds {
 	/**
 	 * Used to determine whether to load AdSense JS in the page footer or not
 	 * when we're serving responsive ads; obviously it should only be loaded if
-	 * the current page has at least one active ad slot
+	 * the current page has at least one active ad slot.
+	 *
+	 * @var bool
 	 */
 	public static $PAGE_HAS_ADS = false;
 
@@ -43,6 +45,7 @@ class ShoutWikiAds {
 	 *   forceads parameter is NOT in the URL, otherwise true.
 	 */
 	private static function canShowAds( User $user ) {
+		// phpcs:ignore MediaWiki.Usage.DeprecatedGlobalVariables.Deprecated$wgTitle
 		global $wgAdConfig, $wgTitle, $wgRequest;
 
 		if ( !$wgAdConfig['enabled'] ) {
@@ -653,8 +656,8 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * This just adds the relevant ad CSS file under certain conditions.
 	 * The actual logic is elsewhere.
 	 *
-	 * @param OutputPage $out
-	 * @param Skin $sk
+	 * @param OutputPage &$out
+	 * @param Skin &$sk
 	 * @return bool
 	 */
 	public static function setupAdCSS( &$out, &$sk ) {
@@ -827,7 +830,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	/**
 	 * Load a leaderboard ad in Aurora's footer.
 	 *
-	 * @param string $data
+	 * @param string &$data
 	 * @param Skin $skin
 	 * @return bool
 	 */
@@ -1021,7 +1024,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * Load a square ad on the Quartz skin, in the sidebar.
 	 *
 	 * @param QuartzTemplate $quartz
-	 * @param string $adBody
+	 * @param string &$adBody
 	 * @return bool
 	 */
 	public static function onQuartzSidebarWidgets( $quartz, &$adBody ) {
@@ -1039,7 +1042,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * Load a square ad on the Quartz skin, in the sidebar.
 	 *
 	 * @param QuartzTemplate $quartz
-	 * @param string $adBody
+	 * @param string &$adBody
 	 * @return bool
 	 */
 	public static function onQuartzSidebarWidgetAdvertiser( $quartz, &$adBody ) {
@@ -1061,7 +1064,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * Renders a leaderboard ad in the footer on the Refreshed skin.
 	 * I18n message is provided by the Refreshed skin in /skins/Refreshed/i18n/<langCode>.json.
 	 *
-	 * @param string $footerExtra
+	 * @param string &$footerExtra
 	 * @return bool
 	 */
 	public static function onRefreshedFooter( &$footerExtra ) {
@@ -1154,7 +1157,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * provided that the leaderboard ad for the said skin(s) is enabled in
 	 * advertising configuration (or a banner ad for Dusk).
 	 *
-	 * @param string $siteNotice Existing site notice HTML (etc.), if any
+	 * @param string &$siteNotice Existing site notice HTML (etc.), if any
 	 * @param Skin $skin
 	 * @return bool
 	 */
@@ -1200,7 +1203,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * to three times per page, we can do it only once. Yay performance!
 	 *
 	 * @param Skin $skin
-	 * @param string $text
+	 * @param string &$text
 	 */
 	public static function onSkinAfterBottomScripts( $skin, &$text ) {
 		global $wgAdConfig;
@@ -1225,7 +1228,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 	 * Render a right rail module ad for Mirage.
 	 *
 	 * @param IContextSource $context
-	 * @param array $modules
+	 * @param array &$modules
 	 */
 	public static function onMirageGetRightRailModules( $context, array &$modules ) {
 		global $wgAdConfig;
@@ -1238,7 +1241,7 @@ google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' :
 			// The ad should come first, to keep it into view.
 			$modules = [
 				'MirageAdModule' => [
-					'factory' => function ( $skin ) use ( $ad ) {
+					'factory' => static function ( $skin ) use ( $ad ) {
 						return new MirageAdModule( $skin, $ad );
 					}
 				]

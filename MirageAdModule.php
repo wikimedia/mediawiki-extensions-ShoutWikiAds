@@ -6,6 +6,10 @@ class MirageAdModule extends RightRailModule {
 	/** @var string */
 	private $ad;
 
+	/**
+	 * @param SkinTemplate $skin
+	 * @param string $ad
+	 */
 	public function __construct( $skin, string $ad ) {
 		parent::__construct( $skin, 'mirage-right-rail-ad' );
 
@@ -15,21 +19,21 @@ class MirageAdModule extends RightRailModule {
 	/**
 	 * @inheritDoc
 	 */
-	protected function getBodyContent() : string {
+	protected function getBodyContent(): string {
 		return $this->ad;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getAdditionalModuleClasses() : array {
+	public function getAdditionalModuleClasses(): array {
 		return [];
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function getHeader() : ?string {
+	public function getHeader(): ?string {
 		return null;
 	}
 }
