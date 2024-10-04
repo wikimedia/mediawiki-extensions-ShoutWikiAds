@@ -54,8 +54,8 @@ class ShoutWikiAds {
 
 		$effectiveGroups = MediaWikiServices::getInstance()->getUserGroupManager()->getUserEffectiveGroups( $user );
 		if (
-			$wgTitle instanceof Title && $wgTitle->isSpecial( 'Userlogin' ) ||
-			in_array( 'staff', $effectiveGroups ) && !$wgRequest->getVal( 'forceads' )
+			( $wgTitle instanceof Title && $wgTitle->isSpecial( 'Userlogin' ) ) ||
+			( in_array( 'staff', $effectiveGroups ) && !$wgRequest->getVal( 'forceads' ) )
 		) {
 			return false;
 		}
