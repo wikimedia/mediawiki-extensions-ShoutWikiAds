@@ -12,12 +12,12 @@
 }
 
 .column-google-right {
+	/* stylelint-disable-next-line declaration-block-no-duplicate-properties */
 	float: right;
 	right: 200px;
 	top: 150px;
 	width: 120px;
 	height: 600px;
-	/* stylelint-disable-next-line declaration-block-no-duplicate-properties */
 	float: left;
 	position: absolute;
 	z-index: 1;
