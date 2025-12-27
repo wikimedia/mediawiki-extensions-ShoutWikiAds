@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 
@@ -189,11 +190,11 @@ google_ad_height = 60;
 google_ad_format = "468x60_as";
 //google_ad_type = "";
 google_ad_channel = "";
-google_color_border = ' . Xml::encodeJsVar( $borderColorMsg->isDisabled() ? $colorBorderDefault : $borderColorMsg->text() ) . ';
-google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefault : $colorBGMsg->text() ) . ';
-google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
-google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
-google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
+google_color_border = ' . Html::encodeJsVar( $borderColorMsg->isDisabled() ? $colorBorderDefault : $borderColorMsg->text() ) . ';
+google_color_bg = ' . Html::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefault : $colorBGMsg->text() ) . ';
+google_color_link = ' . Html::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
+google_color_text = ' . Html::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
+google_color_url = ' . Html::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
 </script>
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
@@ -253,11 +254,11 @@ google_ad_height = 200;
 google_ad_format = "200x200_as";
 google_ad_type = "text";
 google_ad_channel = "";
-google_color_border = ' . Xml::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
-google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
-google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
-google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
-google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
+google_color_border = ' . Html::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
+google_color_bg = ' . Html::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
+google_color_link = ' . Html::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
+google_color_text = ' . Html::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
+google_color_url = ' . Html::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
 </script>
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
@@ -317,11 +318,11 @@ google_ad_height = 250;
 google_ad_format = "250x250_as";
 //google_ad_type = "";
 google_ad_channel = "";
-google_color_border = ' . Xml::encodeJsVar( $borderColorMsg->isDisabled() ? $colorBorderDefault : $borderColorMsg->text() ) . ';
-google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefault : $colorBGMsg->text() ) . ';
-google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
-google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
-google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
+google_color_border = ' . Html::encodeJsVar( $borderColorMsg->isDisabled() ? $colorBorderDefault : $borderColorMsg->text() ) . ';
+google_color_bg = ' . Html::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefault : $colorBGMsg->text() ) . ';
+google_color_link = ' . Html::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
+google_color_text = ' . Html::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
+google_color_url = ' . Html::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
 </script>
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
@@ -391,11 +392,11 @@ google_ad_height = 90;
 google_ad_format = "728x90_as";
 //google_ad_type = "";
 google_ad_channel = "";
-google_color_border = ' . Xml::encodeJsVar( $borderColorMsg->isDisabled() ? $colorBorderDefault : $borderColorMsg->text() ) . ';
-google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefault : $colorBGMsg->text() ) . ';
-google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
-google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
-google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
+google_color_border = ' . Html::encodeJsVar( $borderColorMsg->isDisabled() ? $colorBorderDefault : $borderColorMsg->text() ) . ';
+google_color_bg = ' . Html::encodeJsVar( $colorBGMsg->isDisabled() ? $colorBGDefault : $colorBGMsg->text() ) . ';
+google_color_link = ' . Html::encodeJsVar( $colorLinkMsg->isDisabled() ? $colorLinkDefault : $colorLinkMsg->text() ) . ';
+google_color_text = ' . Html::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
+google_color_url = ' . Html::encodeJsVar( $colorURLMsg->isDisabled() ? $colorURLDefault : $colorURLMsg->text() ) . ';
 </script>
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
@@ -451,11 +452,11 @@ google_ad_height = 125;
 google_ad_format = "125x125_as";
 google_ad_type = "text";
 google_ad_channel = "";
-google_color_border = ' . Xml::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
-google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
-google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
-google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
-google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
+google_color_border = ' . Html::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
+google_color_bg = ' . Html::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
+google_color_link = ' . Html::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
+google_color_text = ' . Html::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
+google_color_url = ' . Html::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
 </script>
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
@@ -511,11 +512,11 @@ google_ad_height = 600;
 google_ad_format = "120x600_as";
 //google_ad_type = "text";
 google_ad_channel = "";
-google_color_border = ' . Xml::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
-google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
-google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
-google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
-google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
+google_color_border = ' . Html::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
+google_color_bg = ' . Html::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
+google_color_link = ' . Html::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
+google_color_text = ' . Html::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
+google_color_url = ' . Html::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
 </script>
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
@@ -571,11 +572,11 @@ google_ad_height = 600;
 google_ad_format = "160x600_as";
 //google_ad_type = "text";
 google_ad_channel = "";
-google_color_border = ' . Xml::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
-google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
-google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
-google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
-google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
+google_color_border = ' . Html::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
+google_color_bg = ' . Html::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
+google_color_link = ' . Html::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
+google_color_text = ' . Html::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
+google_color_url = ' . Html::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
 </script>
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
@@ -639,11 +640,11 @@ google_ad_height = 200;
 google_ad_format = "200x200_as";
 //google_ad_type = "text";
 google_ad_channel = "";
-google_color_border = ' . Xml::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
-google_color_bg = ' . Xml::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
-google_color_link = ' . Xml::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
-google_color_text = ' . Xml::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
-google_color_url = ' . Xml::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
+google_color_border = ' . Html::encodeJsVar( $borderColorMsg->isDisabled() ? 'F6F4C4' : $borderColorMsg->text() ) . ';
+google_color_bg = ' . Html::encodeJsVar( $colorBGMsg->isDisabled() ? 'FFFFE0' : $colorBGMsg->text() ) . ';
+google_color_link = ' . Html::encodeJsVar( $colorLinkMsg->isDisabled() ? '000000' : $colorLinkMsg->text() ) . ';
+google_color_text = ' . Html::encodeJsVar( $colorTextMsg->isDisabled() ? '000000' : $colorTextMsg->text() ) . ';
+google_color_url = ' . Html::encodeJsVar( $colorURLMsg->isDisabled() ? '002BB8' : $colorURLMsg->text() ) . ';
 </script>
 <script type="text/javascript" src="https://pagead2.googlesyndication.com/pagead/show_ads.js"></script>';
 		}
