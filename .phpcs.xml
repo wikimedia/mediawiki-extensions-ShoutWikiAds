@@ -5,6 +5,7 @@
 		<exclude name="MediaWiki.Commenting.LicenseComment.InvalidLicenseTag" />
 		<exclude name="MediaWiki.Files.ClassMatchesFilename.NotMatch" />
 		<exclude name="MediaWiki.WhiteSpace.SpaceBeforeSingleLineComment.NewLineComment" />
+		<exclude name="MediaWiki.Commenting.ClassAnnotations.UnrecognizedAnnotation" />
 	</rule>
 	<file>.</file>
 	<arg name="extensions" value="php" />
